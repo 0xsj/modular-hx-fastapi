@@ -1,0 +1,11 @@
+{
+  "language": "n2f-nest",
+  "module": "id",
+  "result": {
+    "chunk_id": "c7ee54",
+    "wall_time_seconds": 0.703577375,
+    "exit_code": 1,
+    "original_token_count": 284,
+    "output": "The plugin \"vite-tsconfig-paths\" is detected. Vite now supports tsconfig paths resolution natively via the resolve.tsconfigPaths option. You can remove the plugin and set resolve.tsconfigPaths: true in your Vite config instead.\n\n RUN  v4.1.11 /Users/sj/Desktop/dev/builds/blueprints/n2f-nest\n\n \u276f src/shared/id/id.spec.ts (0 test)\n\n\u23af\u23af\u23af\u23af\u23af\u23af Failed Suites 1 \u23af\u23af\u23af\u23af\u23af\u23af\u23af\n\n FAIL  src/shared/id/id.spec.ts [ src/shared/id/id.spec.ts ]\nError: Cannot find module './value.js' imported from /Users/sj/Desktop/dev/builds/blueprints/n2f-nest/src/shared/id/index.ts\n \u276f src/shared/id/index.ts:9:1\n      7|  * @module shared/id\n      8|  */\n      9| export { parse, version, unixMillis, type ID } from './value.js';\n       | ^\n     10| export { V7, type WallClock, type Entropy } from './v7.js';\n     11| export { Sequence } from './sequence.js';\n \u276f src/shared/id/id.spec.ts:4:1\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af[1/1]\u23af\n\n\n Test Files  1 failed (1)\n      Tests  no tests\n   Start at  10:09:24\n   Duration  140ms (transform 33ms, setup 0ms, import 0ms, tests 0ms, environment 0ms)\n\n"
+  }
+}

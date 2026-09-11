@@ -1,0 +1,11 @@
+{
+  "language": "n2f-nest",
+  "module": "clock",
+  "result": {
+    "chunk_id": "a7e473",
+    "wall_time_seconds": 0.705558875,
+    "exit_code": 1,
+    "original_token_count": 261,
+    "output": "The plugin \"vite-tsconfig-paths\" is detected. Vite now supports tsconfig paths resolution natively via the resolve.tsconfigPaths option. You can remove the plugin and set resolve.tsconfigPaths: true in your Vite config instead.\n\n RUN  v4.1.11 /Users/sj/Desktop/dev/builds/blueprints/n2f-nest\n\n \u276f src/shared/clock/clock.spec.ts (0 test)\n\n\u23af\u23af\u23af\u23af\u23af\u23af Failed Suites 1 \u23af\u23af\u23af\u23af\u23af\u23af\u23af\n\n FAIL  src/shared/clock/clock.spec.ts [ src/shared/clock/clock.spec.ts ]\nError: Cannot find module './clock.js' imported from /Users/sj/Desktop/dev/builds/blueprints/n2f-nest/src/shared/clock/index.ts\n \u276f src/shared/clock/index.ts:9:1\n      7|  * @module shared/clock\n      8|  */\n      9| export { FakeClock, SystemClock } from './clock.js';\n       | ^\n     10|\n \u276f src/shared/clock/clock.spec.ts:2:1\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af[1/1]\u23af\n\n\n Test Files  1 failed (1)\n      Tests  no tests\n   Start at  10:04:01\n   Duration  119ms (transform 16ms, setup 0ms, import 0ms, tests 0ms, environment 0ms)\n\n"
+  }
+}

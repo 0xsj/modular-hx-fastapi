@@ -1,0 +1,87 @@
+{
+  "language": "n2f-nest",
+  "scope": "hand-selected clock/id faults and the Rust boxed-source extension",
+  "build_command": [
+    "node",
+    "node_modules/typescript/bin/tsc",
+    "--noEmit",
+    "--incremental",
+    "false"
+  ],
+  "test_command": [
+    "node",
+    "node_modules/vitest/vitest.mjs",
+    "run",
+    "src/shared",
+    "--reporter=verbose"
+  ],
+  "baseline_build_passed": true,
+  "baseline_passed": true,
+  "results": [
+    {
+      "module": "clock",
+      "mutant": "wall_set_resets_elapsed",
+      "file": "src/shared/clock/clock.ts",
+      "before": "this.#wall = validMillis(wall);",
+      "after": "this.#wall = validMillis(wall);\n this.#elapsed = 0n;",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/shared/id/example.spec.ts > example: elapsed time and UUID order survive wall correction",
+        "src/shared/clock/clock.spec.ts > clock contract > C03 wall correction"
+      ]
+    },
+    {
+      "module": "clock",
+      "mutant": "advance_loses_elapsed",
+      "file": "src/shared/clock/clock.ts",
+      "before": "this.#elapsed += BigInt(milliseconds) * 1000000n;",
+      "after": "this.#elapsed += 0n;",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/shared/clock/clock.spec.ts > clock contract > C02 advance",
+        "src/shared/clock/clock.spec.ts > clock contract > C03 wall correction",
+        "src/shared/id/example.spec.ts > example: elapsed time and UUID order survive wall correction"
+      ]
+    }
+  ],
+  "source_hashes": {
+    "package.json": "624ec56bf302bddf8a99a366f1cde8f56d263ae1b55aed43ff1bcecc740d237e",
+    "tsconfig.json": "627754a577c23bdf9e965f5740d9e778e072f8a798361a0314cf3bb2a4b18613",
+    "vitest.config.ts": "8fafca686508b9e08f41349d47ea712125c29a588caa6238791362fe2ac07551",
+    "src/main.ts": "35f91c08888384612e221f24b67e429a371947c97aa141db982e83858d560059",
+    "src/shared/README.md": "9246dbbdee385b30413fd1d2ec4bfdc05fde4090f828339381a995e0f956c78a",
+    "src/root/app.service.ts": "eaf8514ce110fa428a93a27408df4d06d133dbd9ed0a775c315ddfdd507853a9",
+    "src/root/app.module.ts": "f5f9332c8fa3aa76550ab26a69ed2b654e293690230f8c9fbeaf7ea1129a0b2e",
+    "src/root/README.md": "6abb9ca422a7a3da1e8c09d7a178d5e595e1d22b7157e77f266aaa0df12f536c",
+    "src/root/app.controller.spec.ts": "97c79df954aafe787ec44ed0da64f146a41affe994eb9a6c02b57eebfdb4477a",
+    "src/root/app.controller.ts": "6f4dffdd41c8ebf932dd522d1cf14f252704e38767b93ef9b0ce84e165b69265",
+    "src/modules/README.md": "220dce18eca3e3d6e533299be2c405bb975c92b583d0c76b15751b0444fd21d8",
+    "src/shared/id/v7.ts": "8def16848a991c9e022aee98037f2a34bbfd2b0cf925e3019a44f1f4d56f3d38",
+    "src/shared/id/example.spec.ts": "d10a182c95fd333956c6ef9591635013c4acd1f2a47694ef5e322e9a74495ded",
+    "src/shared/id/value.ts": "14b92c6f080333b810e7a6d2a6d3136d74ff38cb9e2e8d0e17fe400f13a83c2a",
+    "src/shared/id/CONTRACT.md": "290f8c10053d2ed4beb75fd521cbc0a4e9e7462380c6015ea753e7e766186ce6",
+    "src/shared/id/id.spec.ts": "bc07471c942d1fd146f231366020b469251a42d1c5f93925d6b204aa365402f5",
+    "src/shared/id/sequence.ts": "f1513dcc1dc14a013450f17276f1791d962d004e50d0462fbfbd5f8d1ac81e71",
+    "src/shared/id/index.ts": "8b458bb006bf42d8b460a083fd796cf42edb4e4e7bd58bf2f20bd9e1bc4a6b1a",
+    "src/shared/errors/example.spec.ts": "99fe8bdb730be5e490e396413b71554454c8cc256c01a03d6988a435c0ba1c6e",
+    "src/shared/errors/errors.spec.ts": "78d9f1ff21a0f8e759e33e437b42069384436eab09b58572abb94990da7aee43",
+    "src/shared/errors/failure.ts": "5fa7b606b0e31da9ef41131c4b4fdc1d2a0e6cc231d0822c865df63bddf6cbcc",
+    "src/shared/errors/result.ts": "ebed7c2c0cddebaebbeffd9cd748b83ea951206245988a615cb6708d6940eaa7",
+    "src/shared/errors/CONTRACT.md": "0dfb0fc274bf466d428be2d79adef47c9a53782312b4516145075f5767e4e53d",
+    "src/shared/errors/README.md": "d6ebee86a3da8da73806fa8aefd9bd10b8fab92aa101615418dc6d2f1048d9f8",
+    "src/shared/errors/index.ts": "490e4801a8be60970eeb20ea8dca1e2cde54a5409f52d00de0484008ba7f5fc2",
+    "src/shared/errors/kind.ts": "291aa4ea546de1ae0c2bf522f00c390bc38b0ebb712662cecfa88fe6e8aaec09",
+    "src/shared/clock/CONTRACT.md": "01f906fcdbc823322c20a4d5c989b90db84e0b980018e212db7929fce422f730",
+    "src/shared/clock/clock.ts": "6634d51a3c19344a94a5bdb97b7983fb5f4d5ed3b179fbcd7b4a5b2c9d98e351",
+    "src/shared/clock/index.ts": "01ac7bb3ec039dc5e2162b61e08f289337548b4c231393eccef4944758f5378f",
+    "src/shared/clock/clock.spec.ts": "a731c53d1bc25a463e2d58bd6f36626af9281792712cfbc76336b83ba98f1e1c"
+  },
+  "restored_baseline_passed": true,
+  "workspace_unchanged": true,
+  "copy_restored": true,
+  "module": "clock"
+}

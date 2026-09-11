@@ -1,0 +1,112 @@
+# Notes
+
+Write what the code cannot explain, while the work is fresh. A useful note
+preserves an alternative that lost, a failure mode, a surprising dependency
+behavior, or reasoning that would otherwise have to be rediscovered.
+
+Do not write a note just to describe a newly created folder.
+
+## Clock and ID foundations
+
+- [Clock walkthrough](modules/src/shared/clock/language-walkthrough.md): wall time,
+  elapsed units, fake ownership and native syntax.
+- [ID walkthrough](modules/src/shared/id/language-walkthrough.md): UUID values,
+  explicit generation, failures and deterministic fixtures.
+- [Clock mutations](modules/src/shared/clock/mutations.md) and
+  [ID mutations](modules/src/shared/id/mutations.md): exact faults and observed results.
+
+
+## Error foundation review
+
+Start with [the TypeScript / JavaScript code walkthrough](modules/src/shared/errors/language-walkthrough.md)
+for a reading order, links to the implementation and a worked example. The
+language notes explain the syntax, the technique it supports and its gotchas:
+
+1. [Literal inference, generics and distributed unions](language/typescript-literals-generics-and-distributed-unions.md).
+2. [Copies, freezing and WeakMap provenance](language/javascript-freezing-copying-and-weakmap-provenance.md).
+3. [Results, unknown caught values and exception edges](language/typescript-results-unknown-and-exception-edges.md).
+
+Two reusable testing notes capture the method and the concrete fixture lesson:
+
+- [Specification tests and targeted mutations](techniques/specification-tests-and-targeted-mutations.md).
+- [Metadata tests need distinct keys](techniques/metadata-tests-need-distinct-keys.md).
+
+## Recorded findings
+
+- [Mutation checks after the errors consistency refactor](modules/src/shared/errors/mutations.md)
+  — selected faults caught, and the field-loss bug only E10 detects.
+
+- [A common public shape still needs different absence semantics](modules/src/shared/errors/consistency.md)
+  — preserving unknown failures while aligning the three public projections.
+
+- [The first errors slice](modules/src/shared/errors/first-slice.md) — initial failing tests,
+  implementation choices and targeted fault-check results.
+
+- [Typed failure values still need runtime boundaries](modules/src/shared/errors/typescript-adaptation.md)
+  — reasoning behind the [draft errors contract](../src/shared/errors/index.ts).
+
+- [PostgreSQL 18 changed the Docker data-volume boundary](substrate/postgres-18-docker-volume-layout.md)
+  — used by [compose.yaml](../compose.yaml).
+
+- [OTLP metric names can change on ingestion](substrate/otlp-metric-names-change-on-ingestion.md)
+  — used by the [synthetic probe](../tools/telemetry/smoke.py) and
+  [retrieval guide](../OBSERVABILITY.md).
+
+## Choose by lifespan
+
+| Directory | What the finding is true of | When to revisit |
+| --- | --- | --- |
+| `modules/<source-directory>/` | This implementation, mirroring its source directory | Its code or caller changes |
+| `substrate/` | A dependency at a particular version | That dependency changes |
+| `patterns/` | An architectural approach | Its assumptions change |
+| `techniques/` | A broadly reusable method | New evidence contradicts it |
+| `language/` | Language behavior | The language or toolchain changes |
+| `concepts/` | A domain concept | The domain understanding changes |
+
+A module note may link to a transferable note. Keep transferable notes independent
+of repository-specific paths; put concrete usage links in the module note or a
+local index. Package documentation can hold short module reasoning without a
+second copy here.
+
+## Module note paths
+
+Use `notes/modules/<repository-relative source directory>/<topic>.md`.
+Mirror the full directory path 1:1, including `pkg/`, `internal/` or `src/`;
+do not flatten it into module-name filename prefixes. A note for a nested
+domain, application, adapter or transport directory mirrors that narrower path.
+
+The current error module maps like this:
+
+| Source directory | Module notes |
+| --- | --- |
+| `src/shared/errors/` | [notes/modules/src/shared/errors/](modules/src/shared/errors/README.md) |
+
+The module directory owns short topic filenames such as `first-slice.md`,
+`language-walkthrough.md` and `mutations.md`. Keep associated evidence beside
+its note and use a local README to navigate the module's documents. Rebase both
+incoming links and links from the moved notes whenever the source owner moves.
+
+Create directories when there are findings to record. A matching directory tree
+does not require a note for every source file or empty copies of every code
+directory. Reusable language and technique notes retain their separate categories.
+
+## Shape
+
+Use a descriptive filename, a title, and a one-sentence claim that adds something
+to the title. Then record:
+
+- **Origin:** what taught this, and whether it was observed, tested or read.
+- **What and why:** the useful finding and the alternative or failure behind it.
+- **Example:** the smallest useful demonstration, when needed.
+- **Gotchas:** assumptions and limits.
+- **Used in:** actual use; module notes name local files, transferable notes name
+  the usage context without depending on one repository.
+- **Related:** relevant notes, contracts or decisions.
+
+Mark unsettled claims **WORKING**. Substrate notes name the dependency version,
+verification date and primary source. Distinguish reading documentation from
+measuring behavior.
+
+Keep progress and command logs in [STATUS.md](../STATUS.md). Record consequential
+choices in [decisions/](../decisions/README.md). Notes must not conceal unfinished
+work behind a retrospective explanation.

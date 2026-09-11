@@ -1,0 +1,79 @@
+{
+  "repository": "n2f-nest",
+  "scope": "hand-selected errors mutations after consistency refactor",
+  "baseline_build_passed": true,
+  "baseline_passed": true,
+  "build_command": [
+    "node",
+    "node_modules/typescript/bin/tsc",
+    "-p",
+    "tsconfig.errors.json"
+  ],
+  "test_command": [
+    "node",
+    "node_modules/vitest/vitest.mjs",
+    "run",
+    "src/shared/errors/errors.spec.ts",
+    "--reporter=verbose"
+  ],
+  "source_hashes": {
+    "pnpm-lock.yaml": "294511c9cd87af11f12585164cef4bb0408dacb5af4c76366c0e5646ee535ccf",
+    "package.json": "624ec56bf302bddf8a99a366f1cde8f56d263ae1b55aed43ff1bcecc740d237e",
+    "tsconfig.errors.json": "cba18cabd4b2e7d32e168a5a8ec2657e1f3c1323884b65d2c289e039592cfc98",
+    "tsconfig.json": "627754a577c23bdf9e965f5740d9e778e072f8a798361a0314cf3bb2a4b18613",
+    "vitest.config.ts": "8fafca686508b9e08f41349d47ea712125c29a588caa6238791362fe2ac07551",
+    "src/shared/errors/example.spec.ts": "99fe8bdb730be5e490e396413b71554454c8cc256c01a03d6988a435c0ba1c6e",
+    "src/shared/errors/errors.spec.ts": "78d9f1ff21a0f8e759e33e437b42069384436eab09b58572abb94990da7aee43",
+    "src/shared/errors/failure.ts": "5fa7b606b0e31da9ef41131c4b4fdc1d2a0e6cc231d0822c865df63bddf6cbcc",
+    "src/shared/errors/result.ts": "ebed7c2c0cddebaebbeffd9cd748b83ea951206245988a615cb6708d6940eaa7",
+    "src/shared/errors/CONTRACT.md": "0dfb0fc274bf466d428be2d79adef47c9a53782312b4516145075f5767e4e53d",
+    "src/shared/errors/README.md": "3cc0c7380fbf4f7cc2055fc12b58bf935ae3d93bc61af1bbc3f074d3936a6cb1",
+    "src/shared/errors/index.ts": "490e4801a8be60970eeb20ea8dca1e2cde54a5409f52d00de0484008ba7f5fc2",
+    "src/shared/errors/kind.ts": "291aa4ea546de1ae0c2bf522f00c390bc38b0ebb712662cecfa88fe6e8aaec09"
+  },
+  "results": [
+    {
+      "mutant": "expose_internal_projection",
+      "file": "src/shared/errors/failure.ts",
+      "before": "if (!known || known.kind === 'internal')",
+      "after": "if (!known)",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/shared/errors/errors.spec.ts > errors specification > E04: projects only explicitly public information",
+        "src/shared/errors/errors.spec.ts > errors specification > JS01: normalizes caught nullish, primitive and hostile values as real failures"
+      ],
+      "copy_restored": true
+    },
+    {
+      "mutant": "lose_cause_during_annotation",
+      "file": "src/shared/errors/failure.ts",
+      "before": "cause: previous.cause,",
+      "after": "cause: undefined,",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/shared/errors/errors.spec.ts > errors specification > E06: preserves the local condition and cause through enrichment"
+      ],
+      "copy_restored": true
+    },
+    {
+      "mutant": "replace_instead_of_merge_fields",
+      "file": "src/shared/errors/failure.ts",
+      "before": "Object.freeze({ ...value.fields, ...fields })",
+      "after": "Object.freeze({ ...fields })",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/shared/errors/errors.spec.ts > E10: merges metadata and preserves meaning while replacing the source"
+      ],
+      "copy_restored": true
+    }
+  ],
+  "restored_baseline_passed": true,
+  "workspace_unchanged": true,
+  "copy_restored": true
+}
