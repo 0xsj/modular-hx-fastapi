@@ -1,0 +1,68 @@
+{
+  "language": "n2f-nest",
+  "results": [
+    {
+      "module": "provenance",
+      "mutant": "retry_skips_ordinal",
+      "file": "src/shared/provenance/factory.ts",
+      "before": "s.attempt + 1",
+      "after": "s.attempt + 0",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/root/foundations.spec.ts > F02/F03 output choices preserve workflow and scope relations",
+        "src/shared/provenance/provenance.spec.ts > P03 P04 P05 P06 P07 P08 P09 transitions"
+      ]
+    },
+    {
+      "module": "provenance",
+      "mutant": "child_loses_depth",
+      "file": "src/shared/provenance/factory.ts",
+      "before": "w.depth++;",
+      "after": "w.depth += 0;",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/root/foundations.spec.ts > F02/F03 output choices preserve workflow and scope relations",
+        "src/shared/provenance/collision.spec.ts > P23 explicit cause cannot hide reused execution identity",
+        "src/shared/provenance/provenance.spec.ts > P03 P04 P05 P06 P07 P08 P09 transitions",
+        "src/shared/provenance/provenance.spec.ts > P10 P11 bounds and wall corrections",
+        "src/shared/provenance/provenance.spec.ts > P12 P23 validates before effects and forwards failures",
+        "src/shared/provenance/provenance.spec.ts > P14 replay"
+      ]
+    },
+    {
+      "module": "provenance",
+      "mutant": "cause_without_correlation",
+      "file": "src/shared/provenance/incoming.ts",
+      "before": "else if (correlation === undefined)",
+      "after": "else if (false)",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/shared/provenance/provenance.spec.ts > P15 P16 P17 incoming dispositions"
+      ]
+    },
+    {
+      "module": "provenance",
+      "mutant": "collision_guard_removed",
+      "file": "src/shared/provenance/factory.ts",
+      "before": "forbidden.includes(scopeId)",
+      "after": "(forbidden.includes(scopeId) && false)",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/shared/provenance/collision.spec.ts > P23 explicit cause cannot hide reused execution identity"
+      ]
+    }
+  ],
+  "baseline_build_passed": true,
+  "baseline_passed": true,
+  "restored_baseline_passed": true,
+  "workspace_unchanged_at_run": true,
+  "copy_restored": true
+}

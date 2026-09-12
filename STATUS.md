@@ -1,5 +1,247 @@
 # Status
 
+## 2026-09-12 — Built-in authentication contract
+
+Corrected baseline scope: identity includes authentication, without an account/profile
+prerequisite. Added A01–A24, native leaf/capability shapes, a logical schema and the
+[staged acceptance plan](AUTHENTICATION.md). ADR 0011 records opaque revocable sessions,
+identity-owned credentials and explicit post-commit mail/resend semantics.
+
+The working first client is email/password with browser cookie sessions. Contracts
+cover verification/recovery, bounded password hashing, token-purpose separation,
+session expiry/revocation, version-guarded atomic writes, CSRF, authenticated
+provenance, WebSocket checks and safe audit translation. These are specifications,
+not implemented auth endpoints or executable auth tests.
+
+Reviewed current OWASP/NIST primary guidance; sources are in the auth contract.
+Common contract/API/schema content and local links were checked across the builds.
+Runtime code and dependencies are unchanged; prior suites and mutation checks were
+not rerun for this documentation-only stage. Module notes mirror the domain path.
+
+## 2026-09-12 — Identity principal leaves
+
+Defined identity/audit/org ownership and implemented identity I01–I07: human/service
+principals, validated display names, owned snapshots, restoration and immutable
+suspend/activate transitions with version/time guards. The initial slice provisions
+principal values; credentials and sessions are deferred.
+
+Four named leaf tests passed per build after behavioral failures against refusing
+stubs. Four selected compiled mutations were caught per build; isolated baseline and
+restored runs passed. These implementation-visible checks are not exhaustive.
+Go race/vet, Rust clippy with warnings denied, and Nest type checks passed.
+See [mirrored notes and evidence](notes/modules/src/modules/identity/domain/README.md).
+
+A review exposed erased TypeScript constructor privacy: Reflect.construct bypassed
+the static private constructor. A failing regression test preceded a current-state
+validation fix. Go explicitly guards its zero principal; Rust's safe public API
+prevents these malformed principal constructions.
+
+Application commands/queries, atomic identity/outbox persistence, domain HTTP,
+audit ingestion and org remain planned. The current HTTP adapter is diagnostic
+GET/HEAD-only and discards request bodies; registration needs a deliberate contract
+extension with bounded body access and an explicit provisioning admission policy.
+No new database, broker or end-to-end workflow verification is claimed.
+
+## 2026-09-11 — JetStream validates the publisher replacement
+
+Added persistent NATS JetStream 2.14.6 to each independent Compose stack and a
+concrete adapter behind the existing Publisher capability. The outbox dispatcher,
+event envelope and database consumer transaction API remain unchanged. Root selects
+`EVENTS_TRANSPORT=postgres|jetstream`; broker delivery is acknowledged only after a
+matching durable PostgreSQL mailbox receipt. See [the run guide](JETSTREAM.md).
+
+The effective Compose audit found 30 unique loopback TCP host ports: Go 71xx,
+Nest 72xx, Rust 73xx. PostgreSQL remains 7120/7220/7320; NATS adds client ports
+7122/7222/7322 and monitoring ports 7123/7223/7323. All three normal JetStream
+containers are healthy and intentionally left running. Verification containers
+are stopped, with their named volumes retained; other user containers are unchanged.
+
+Real adapter/process checks passed for rolled-back enqueue, reclaimed outbox after
+lost acknowledgement, PubAck deduplication, conflicting IDs, nondurable sink refusal
+and redelivery, mailbox effect deduplication, a full 64 KiB envelope, closed publisher
+retaining pending work, both root selections, incompatible-resource refusal, forced
+broker recreation with persisted pending delivery, and outage/reopen. Safe logs omit
+payload sentinels and connection strings. Full ordinary suites passed; explicit
+DB/broker tests skip there and ran separately in the real verifier. Go race/vet,
+Rust clippy with warnings denied, and Nest lint/type/build checks passed.
+
+The real swap exposed a pull-subscription mismatch in Rust/Node request multiplexers,
+header overhead at the envelope size boundary, and capacity reservations retained by
+old fixture streams. These findings and language-specific ownership details are in
+[mirrored notes](notes/modules/src/root/jetstream-verification.md). No new mutation score, clustered
+availability, fanout, exactly-once, deployment authentication or broker OTLP claim.
+
+## 2026-09-11 — Infrastructure before identity, audit and org
+
+Completed validation/pagination, PostgreSQL, readiness, outbound HTTP, WebSockets
+and events, in the requested leaf-first order. Contracts are local to each owner;
+[the run guide](INFRASTRUCTURE_BUILD.md) describes the implemented diagnostics.
+Publisher remains a replaceable durable-receipt seam, with a real PostgreSQL mailbox
+adapter and explicit JetStream requirements. No domain was created.
+
+Real PostgreSQL checks passed for migrations, rollback, uncertain-safe failure
+mapping, concurrent writes, deadlines and close; event checks passed for duplicate
+and conflicting reuse, wrong receipts, stale leases, poison retention, consumer
+savepoint rollback, concurrent claims and a near-limit envelope roundtrip. The
+compiled event example completed with safe logs. Database outage/recovery changed
+readiness while liveness remained healthy; shutdown stayed within its budget.
+
+All three builds passed the native outbound/socket process matrix. Stored outbound
+CLIENT spans retain server parentage and propagated child context, and duration
+metrics were retrieved. The existing sampled HTTP regression passed 48 requests,
+48 completion logs and six invalid-config starts per build; its spans, logs and
+metrics were retrieved again after the root changes. Prior unsampled/outage matrices
+were not repeated in this pass.
+
+Full ordinary suites passed. Nest type checking, lint, build and the existing HTTP end-to-end test passed; the full unit suite passed 85 tests with the two explicit DB tests skipped there and exercised separately.
+Six selected infrastructure mutations were caught per build (18/18 across the
+comparison). These are implementation-visible targeted checks, not an exhaustive
+mutation score. See [mirrored notes and evidence](notes/modules/src/root/infrastructure-verification.md).
+
+Corrections worth retaining: SQLx commit receipt ambiguity needed a pre-commit
+transaction usability check; Node cannot kill an arbitrary Promise on timeout;
+Rust needed explicit oversized-frame closure; and jsonb output formatting could
+expand a valid envelope past the wire budget. The final storage uses validated
+text plus semantic JSON duplicate comparison. Dedicated socket/event OTLP signals,
+broker fanout, NATS integration and business audit policy remain subsequent work.
+
+## 2026-09-11 — HTTP and telemetry realigned and integrated
+
+Completed the value/API corrections, shared outcomes, once-only request lifecycle,
+protected trace logging, native HTTP adapters and bounded OTLP providers. Root now
+owns diagnostic routes, provenance admission, explicit context, validated settings
+and shared shutdown. Mirrored notes describe the language-specific choices.
+
+The final comparison passed five modes with 48 requests and six invalid-config
+starts each. Stored spans, trace/provenance-linked logs and duration metrics were
+retrieved, including unsampled and post-recovery signals. Four selected mutations
+per build were caught. See [verification](notes/modules/src/root/http-verification.md)
+and the [run guide](TELEMETRY_HTTP.md). Older entries below describe historical stages.
+
+
+## 2026-09-11 — Create HTTP core leaves
+
+Implemented `src/shared/http` projection and completion leaves from H01–H08: runtime safe public problems, status/title mapping, method normalization and completion policy. TypeScript compilation and focused Vitest pass.
+
+Framework ingress, correlation headers, request context, once-only observation,
+trace logger binding, OTel providers and live HTTP/collector integration remain
+pending. No framework dependency was added.
+
+## 2026-09-11 — Implemented telemetry value leaves
+
+Implemented `src/shared/telemetry/index.ts` trace identity and outcome leaves from
+T01–T02: runtime validation, owned snapshots, sampling preservation and exact
+outcome parsing. The telemetry spec file has 4 tests; TypeScript compilation and
+the focused Vitest run passed.
+
+T03–T12, SDK providers, HTTP observation and OTLP delivery remain pending.
+
+
+## 2026-09-11 — Specify telemetry into HTTP, leaf first
+
+Added [the slice plan](TELEMETRY_HTTP.md), telemetry T01–T12 and HTTP H01–H14
+contracts, native API/leaf maps and portable completion facts. Native package/module
+entries are documentation-only. ADR 0007 records request-completion and provider
+ownership; prior accepted ADR bodies remain unchanged.
+
+The specifications separate trace identity from provenance, retain explicit
+failure presence across languages, define safe problem responses and bounded
+request attributes, and assign completion one owner. Root must connect sanitized
+logs to a real ingestion path and share service identity and a shutdown budget.
+Notes mirror the full source paths; current architecture/observability inventories
+were corrected to acknowledge implemented logging and provenance.
+
+TypeScript no-emit compilation passed; Prettier passed for the two documentation
+entry files.
+Documentation links resolved and the common contracts/completion shapes matched
+across all three clones. Existing source/dependency hashes matched except the
+Rust shared-module documentation declarations; no SDK dependency was added.
+
+No new executable spec tests, behavioral implementation, mutation run, live HTTP
+integration or application OTLP export/retrieval is claimed. Existing runtime tests
+were not repeated for this documentation-only change. Next: public leaf tests,
+implementation and selected mutations, then native adapters and real process checks.
+
+## 2026-09-11 — Implemented process foundations
+
+Implemented secret, captured env parsing, root-owned config, provenance values and
+transitions, explicit log projections, console/JSON/no-op adapters and the named
+foundations command. The shared contract preceded tests and implementations;
+initial missing-surface failures are recorded distinctly from behavioral regressions.
+ADR 0006 records logger projection and bounded delivery ownership before dependencies.
+
+Node 24.19.0 / pnpm 11.22.0: TypeScript compilation, Nest build, 67 unit tests, 1 HTTP end-to-end test, oxlint and changed-source Prettier checks passed.
+
+All eleven process scenarios passed, including actual pseudo-terminal auto-color,
+redaction, malformed configuration, output severity and retry identity relations.
+All 15 selected mutations were caught after successful builds; restored baselines
+and copied/workspace hashes matched. These are selected faults, not an exhaustive
+mutation score. No invalid or harness-failing mutation was counted as a catch.
+
+Notes mirror full source directories, with walkthroughs, initial-red captures and
+per-module mutation evidence. [Root verification](notes/modules/src/root/verification.md)
+links the process report and actual JSON example. [FOUNDATIONS.md](FOUNDATIONS.md)
+describes run commands, config defaults and remaining integration checkpoints.
+
+The separate pnpm peers check reports the existing vite-tsconfig-paths → tsconfck@3.1.6 peer constraint (^5.0.0) against installed TypeScript 6.0.3. Pino introduces no peer conflict. Vite also reports that native tsconfigPaths can replace that plugin. This unrelated test-tool migration was not performed; actual compiler/unit/e2e checks are green.
+
+No application OTLP export, remote secret provider, database/broker/socket adapter,
+frontend compatibility or durable audit behavior is claimed. The Nest HTTP greeting
+remains independent of this named example. No existing Compose resources were changed.
+
+
+## 2026-09-11 — Identify the next leaves for the foundations demo
+
+Added [FOUNDATIONS.md](FOUNDATIONS.md) with native file paths and dependency order:
+secret value first, then env lookup/parsing and logger level/color policy;
+reader/output adapters, provenance consumers, root config and demo wiring follow.
+Runtime paths in that map are planned and have not been created as empty stubs.
+The target uses actual foundations through no-op, colorized console and structured
+outputs, including config validation, nested secret redaction, work/retry identity
+and representative errors.
+
+Added the [secret contract](src/shared/secret/CONTRACT.md) and native module docs.
+S01–S10 define applicable leaf requirements; S11 is reserved for real logger
+adapters. A constructed empty secret still redacts; config owns requiredness.
+The [design note](notes/modules/src/shared/secret/redaction-and-requiredness.md)
+records that boundary and why native formatting routes need separate checks.
+Module notes retain the full 1:1 source-directory mapping.
+
+The secret entry point passed Prettier and the full TypeScript no-emit check.
+Local documentation links, clone independence, matching secret contracts and
+module-note ownership were checked. Existing runtime source, tests, dependency
+files and Compose configuration are unchanged; Rust only registers the new
+documentation module. No secret runtime APIs, executable spec tests, mutation
+results or runnable demo are claimed. Application/infra suites were not rerun.
+Next is the public secret specification test file identified in the file map,
+followed by its value implementation.
+
+
+## 2026-09-11 — Provenance contract and native API proposal
+
+Specified all accepted additions in [src/shared/provenance](src/shared/provenance/README.md): workflow
+attribution and per-execution executor, logical work versus fresh execution IDs,
+start time, retries and replay, bounded additional causal links, operation names,
+incoming-context disposition and WebSocket message boundaries. Prepared work has
+no execution ID/time until execution starts. Restore operations validate complete
+snapshots; accepting a correlation hint does not establish upstream attribution,
+origin, hop count or authority.
+
+The matching contract defines P01–P24 acceptance requirements, worked scenarios
+and a native API proposal. These are not executable specification tests. Socket,
+event, audit and projection requirements explicitly remain with later adapters.
+Decision 0005 records the design. Design notes live under
+[notes/modules/src/shared/provenance](notes/modules/src/shared/provenance/README.md), mirroring the source directory.
+
+The full TypeScript no-emit check and provenance entry-point formatting check passed.
+Documentation links and module-note paths were checked; the three contracts and
+worked-scenario documents match. Existing implementation, tests, dependencies and
+Compose files are unchanged, apart from Rust's documentation module registration.
+No provenance runtime operations, executable spec tests or mutation checks have
+been completed. Application and infrastructure suites were not rerun for this
+documentation slice. Next is the executable leaf specification before implementation.
+
+
 ## 2026-09-11 — Clock and ID leaf foundations
 
 Implemented separate [src/shared/clock](src/shared/clock/README.md) and

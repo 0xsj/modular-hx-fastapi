@@ -1,0 +1,112 @@
+The plugin "vite-tsconfig-paths" is detected. Vite now supports tsconfig paths resolution natively via the resolve.tsconfigPaths option. You can remove the plugin and set resolve.tsconfigPaths: true in your Vite config instead.
+
+ RUN  v4.1.11 /private/var/folders/_t/3ghz_tk90d53wy21s4tb20h80000gn/T/n2f-process-mutations-jz_8b_48/work
+
+ ❯ src/shared/provenance/collision.spec.ts (1 test | 1 failed) 6ms
+   × P23 explicit cause cannot hide reused execution identity 5ms
+ ❯ src/shared/provenance/provenance.spec.ts (8 tests | 4 failed) 8ms
+   × P03 P04 P05 P06 P07 P08 P09 transitions 2ms
+   × P10 P11 bounds and wall corrections 0ms
+   × P12 P23 validates before effects and forwards failures 2ms
+   × P14 replay 0ms
+ ❯ src/root/foundations.spec.ts (2 tests | 1 failed) 6ms
+   × F02/F03 output choices preserve workflow and scope relations 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/root/foundations.spec.ts > F02/F03 output choices preserve workflow and scope relations
+AssertionError: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ src/root/foundations.spec.ts:45:18
+     43|       false,
+     44|     );
+     45|     expect(code).toBe(0);
+       |                  ^
+     46|     expect(diagnostic).toEqual([]);
+     47|     expect(out.join('')).not.toContain('private-SENTINEL');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  src/shared/provenance/collision.spec.ts > P23 explicit cause cannot hide reused execution identity
+AssertionError: expected 'provenance.invalid_depth' to be 'provenance.invalid_generated_id' // Object.is equality
+
+Expected: "provenance.invalid_generated_id"
+Received: "provenance.invalid_depth"
+
+ ❯ src/shared/provenance/collision.spec.ts:32:31
+     30|   expect(result.ok).toBe(false);
+     31|   if (!result.ok)
+     32|     expect(result.error.type).toBe('provenance.invalid_generated_id');
+       |                               ^
+     33| });
+     34|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  src/shared/provenance/provenance.spec.ts > P03 P04 P05 P06 P07 P08 P09 transitions
+Error: provenance.invalid_depth
+ ❯ value src/shared/provenance/provenance.spec.ts:6:20
+      4| import { failure, type Failure, type Result } from '../errors/index.js…
+      5| function value<T>(r: Result<T, Failure>): T {
+      6|   if (!r.ok) throw new Error(r.error.type);
+       |                    ^
+      7|   return r.value;
+      8| }
+ ❯ src/shared/provenance/provenance.spec.ts:73:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  src/shared/provenance/provenance.spec.ts > P10 P11 bounds and wall corrections
+Error: provenance.invalid_depth
+ ❯ value src/shared/provenance/provenance.spec.ts:6:20
+      4| import { failure, type Failure, type Result } from '../errors/index.js…
+      5| function value<T>(r: Result<T, Failure>): T {
+      6|   if (!r.ok) throw new Error(r.error.type);
+       |                    ^
+      7|   return r.value;
+      8| }
+ ❯ src/shared/provenance/provenance.spec.ts:123:10
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  src/shared/provenance/provenance.spec.ts > P12 P23 validates before effects and forwards failures
+AssertionError: expected 'provenance.invalid_depth' to be 'provenance.invalid_generated_id' // Object.is equality
+
+Expected: "provenance.invalid_generated_id"
+Received: "provenance.invalid_depth"
+
+ ❯ src/shared/provenance/provenance.spec.ts:149:46
+    147|   );
+    148|   const a = value(collision.open(root()));
+    149|   expect(typeOf(collision.child(a, step()))).toBe(
+       |                                              ^
+    150|     'provenance.invalid_generated_id',
+    151|   );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  src/shared/provenance/provenance.spec.ts > P14 replay
+Error: provenance.invalid_depth
+ ❯ value src/shared/provenance/provenance.spec.ts:6:20
+      4| import { failure, type Failure, type Result } from '../errors/index.js…
+      5| function value<T>(r: Result<T, Failure>): T {
+      6|   if (!r.ok) throw new Error(r.error.type);
+       |                    ^
+      7|   return r.value;
+      8| }
+ ❯ src/shared/provenance/provenance.spec.ts:196:10
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  3 failed | 15 passed (18)
+      Tests  6 failed | 61 passed (67)
+   Start at  14:53:14
+   Duration  396ms (transform 1.29s, setup 0ms, import 2.14s, tests 187ms, environment 1ms)
+

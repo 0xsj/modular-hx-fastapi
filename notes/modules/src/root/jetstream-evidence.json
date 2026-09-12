@@ -1,0 +1,43 @@
+{
+  "date": "2026-09-11",
+  "language": "nest",
+  "command": "python3 tools/verify_jetstream.py",
+  "result": "passed",
+  "real_adapters": [
+    "PostgreSQL 18.6",
+    "NATS JetStream 2.14.6"
+  ],
+  "cases": [
+    "rolled_back_enqueue_not_dispatched",
+    "lost_outbox_ack_reclaimed_and_broker_deduplicated",
+    "conflicting_id_refused",
+    "nondurable_sink_not_acknowledged",
+    "redelivery_to_postgres_mailbox",
+    "database_effect_deduplicated",
+    "65536_byte_event_with_headers",
+    "closed_publisher_retains_pending_outbox",
+    "postgres_and_jetstream_root_selection",
+    "incompatible_stream_not_rewritten",
+    "pending_event_persisted_across_sigkill_and_recreation",
+    "recovered_event_processed_marker_committed",
+    "outage_safe_refusal_and_reopen",
+    "safe_logs"
+  ],
+  "ordinary_suite": "passed; explicit integration prerequisites skipped there, run separately above",
+  "static_checks": [
+    "tsc --noEmit",
+    "lint",
+    "build"
+  ],
+  "port_audit": {
+    "published_tcp_ports": 30,
+    "unique": true,
+    "loopback": true
+  },
+  "limits": [
+    "single-node broker",
+    "one durable mailbox destination",
+    "no new mutation-score claim",
+    "no broker OTLP verification"
+  ]
+}

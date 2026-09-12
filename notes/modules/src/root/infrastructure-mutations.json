@@ -1,0 +1,39 @@
+{
+  "language": "nest",
+  "caught": 6,
+  "selected": 6,
+  "exhaustive": false,
+  "evidence": "/var/folders/_t/3ghz_tk90d53wy21s4tb20h80000gn/T/n2f-infrastructure-mutations-7k34vnru",
+  "cases": [
+    {
+      "name": "report-overflow",
+      "caught": true,
+      "source_sha256": "3c7e728f6632c27f272e25ae494174680dee0c6aa8ae8cd8510e71f525a67722"
+    },
+    {
+      "name": "wrong-cursor-anchor",
+      "caught": true,
+      "source_sha256": "35ad5574c6d4632e6cf7a5809136e26771137ea629a567d74f6edb6e6b6b10b7"
+    },
+    {
+      "name": "drain-reopens",
+      "caught": true,
+      "source_sha256": "9595f5819240cc4fe75c174e5df2ea4edcbb6e910fdf68f7f4d3a790d9c70ed7"
+    },
+    {
+      "name": "wrong-receipt-accepted",
+      "caught": true,
+      "source_sha256": "153100c2b12ba5ec6ea29094893f87bd71103a283da2d865a28c1911ed2cfb75"
+    },
+    {
+      "name": "stale-lease-accepted",
+      "caught": true,
+      "source_sha256": "153100c2b12ba5ec6ea29094893f87bd71103a283da2d865a28c1911ed2cfb75"
+    },
+    {
+      "name": "consumer-effects-survive",
+      "caught": true,
+      "source_sha256": "153100c2b12ba5ec6ea29094893f87bd71103a283da2d865a28c1911ed2cfb75"
+    }
+  ]
+}

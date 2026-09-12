@@ -5,20 +5,32 @@ explicit dependencies, and a record of what we learn while building. Each bluepr
 stands on its own. Shared behavior will make them useful comparisons and future
 backends for Flover; that compatibility has not been demonstrated yet.
 
-This is a light foundation. The generated `GET /` endpoint still returns
-`Hello World!` and exercises Nest composition and HTTP wiring. There are no business
-modules, persistence adapters, authentication, provenance, or logger foundations yet.
-The HTTP smoke example can be replaced when the first real feature arrives.
+## Current state
 
-The first leaf foundation is [shared/errors](src/shared/errors/index.ts): immutable
-failure values, public projection, Result helpers and a framework-free exception
-carrier. Its [contract](src/shared/errors/CONTRACT.md) and
-[specification tests](src/shared/errors/errors.spec.ts) describe the implemented
-behavior. No Nest error filter or frontend mapping is connected yet.
+Errors, clock, UUIDs, secrets, env parsing, provenance and logging are implemented
+with local contracts and executable tests. The composition root owns typed config,
+service identity and bounded output delivery. The [foundations command](FOUNDATIONS.md)
+exercises them together through console, JSON and no-op adapters.
 
-[Clock](src/shared/clock/README.md) and [ID](src/shared/id/README.md) provide
-production/manual clocks, immutable UUID values, controlled UUIDv7 generation and
-finite fixture sequences. They use Node runtime facilities and add no npm packages.
+The logger uses a hand-written console formatter and Pino 10.3.1.
+A tested Nest LoggerService bridge lives at root.
+Validation/pagination, PostgreSQL transactions and migrations, readiness, outbound
+HTTP, WebSockets and a transactional outbox with a replaceable publisher are now
+implemented. [JetStream](JETSTREAM.md) is also implemented and verified as a second
+publisher, with a durable handoff into the PostgreSQL mailbox. See [the infrastructure guide](INFRASTRUCTURE_BUILD.md) for contracts,
+commands and limits. [Identity principal leaves](src/modules/identity/domain/CONTRACT.md) now implement
+registration values, restoration and versioned suspend/activate transitions.
+[Domain ownership and order](DOMAINS.md) describe the next application/persistence,
+audit and org slices. [Built-in authentication](AUTHENTICATION.md) is now specified
+as required baseline scope, with credential/session/challenge contracts, a logical
+schema and native API map. No persisted identity workflow or login is implemented yet.
+
+The [telemetry into HTTP slice](TELEMETRY_HTTP.md) now runs a diagnostic server:
+provenance admission, safe problem responses, isolated request context, completion
+logs and OTLP traces/metrics/logs. The guide includes settings and verification.
+
+
+The Nest HTTP greeting remains independent.
 
 ## Start
 
@@ -26,7 +38,7 @@ The [errors implementation guide](src/shared/errors/README.md) maps the APIs acr
 Rust and Nest, explains intentional differences, and points to the local example.
 
 Use the Node.js version in [.nvmrc](.nvmrc) and pnpm. Validation of this foundation
-used pnpm 12.3.4. The committed lockfile records the dependency resolution.
+used pnpm 11.22.0. The committed lockfile records the dependency resolution.
 
 ```sh
 pnpm install --frozen-lockfile
@@ -53,15 +65,16 @@ docker compose up -d --wait
 See [INFRASTRUCTURE.md](INFRASTRUCTURE.md) for ports, optional environment overrides,
 data lifecycle, and selected events/WebSocket direction.
 [OBSERVABILITY.md](OBSERVABILITY.md) contains the synthetic telemetry example and
-shared instrumentation expectations. Application adapters are not connected yet.
+shared instrumentation expectations. The diagnostic HTTP adapter exports all three
+signals; see [its run guide](TELEMETRY_HTTP.md).
 
 ## Layout
 
 ```text
 src/main.ts       process entry point
 src/root/         Nest composition and the temporary HTTP smoke example
-src/modules/      future business modules, organized by domain ownership
-src/shared/       errors, clock and ID foundations; future owned infrastructure
+src/modules/      business modules, starting with identity principal leaves
+src/shared/       implemented foundations, HTTP and telemetry adapters
 test/             tests that exercise the assembled application
 notes/            discoveries, techniques, and unresolved questions
 decisions/        consequential choices and their alternatives
@@ -83,8 +96,10 @@ pnpm run test
 pnpm run test:e2e
 ```
 
-The tests cover errors, clocks, IDs and the generated greeting. The HTTP test opens
-a local socket. For just the leaf contract, run `pnpm exec tsc -p tsconfig.errors.json`
+The tests cover shared foundations, HTTP/telemetry, foundations root and the
+independent generated greeting. The greeting HTTP test opens a local socket.
+HTTP/telemetry have regression tests and a separate real-process verifier.
+For just the errors contract, run `pnpm exec tsc -p tsconfig.errors.json`
 and `pnpm exec vitest run src/shared/errors`.
 [example.spec.ts](src/shared/errors/example.spec.ts) demonstrates a refusal reaching
 an exception boundary with a safe public projection. These checks do not establish
@@ -101,3 +116,10 @@ python3 tools/mutations/foundations.py
 The runner builds and tests isolated temporary copies, retaining logs and hashes.
 Its selected mutations probe clock/ID contracts; they are not an exhaustive score.
 See the [notes index](notes/README.md) for language walkthroughs and recorded evidence.
+
+## Process verification
+
+`python3 tools/verify_foundations.py` builds the real executable and verifies eleven
+process scenarios, including terminal color and safe invalid-config exit.
+`python3 tools/mutations/process.py` probes selected secret/env/provenance/logger/root
+faults in isolated copies. These are targeted checks, not exhaustive guarantees.

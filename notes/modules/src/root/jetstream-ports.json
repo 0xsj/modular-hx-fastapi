@@ -1,0 +1,217 @@
+{
+  "date": "2026-09-11",
+  "source": "docker compose config --format json, resolved separately in each blueprint",
+  "unique": true,
+  "mappings": [
+    {
+      "lang": "go",
+      "service": "mailpit",
+      "ip": "127.0.0.1",
+      "port": "7125",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "go",
+      "service": "mailpit",
+      "ip": "127.0.0.1",
+      "port": "7126",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "go",
+      "service": "nats",
+      "ip": "127.0.0.1",
+      "port": "7122",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "go",
+      "service": "nats",
+      "ip": "127.0.0.1",
+      "port": "7123",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "go",
+      "service": "observability",
+      "ip": "127.0.0.1",
+      "port": "7140",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "go",
+      "service": "observability",
+      "ip": "127.0.0.1",
+      "port": "7141",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "go",
+      "service": "observability",
+      "ip": "127.0.0.1",
+      "port": "7142",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "go",
+      "service": "postgres",
+      "ip": "127.0.0.1",
+      "port": "7120",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "go",
+      "service": "redis",
+      "ip": "127.0.0.1",
+      "port": "7121",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "go",
+      "service": "s3",
+      "ip": "127.0.0.1",
+      "port": "7130",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "nest",
+      "service": "mailpit",
+      "ip": "127.0.0.1",
+      "port": "7225",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "nest",
+      "service": "mailpit",
+      "ip": "127.0.0.1",
+      "port": "7226",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "nest",
+      "service": "nats",
+      "ip": "127.0.0.1",
+      "port": "7222",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "nest",
+      "service": "nats",
+      "ip": "127.0.0.1",
+      "port": "7223",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "nest",
+      "service": "observability",
+      "ip": "127.0.0.1",
+      "port": "7240",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "nest",
+      "service": "observability",
+      "ip": "127.0.0.1",
+      "port": "7241",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "nest",
+      "service": "observability",
+      "ip": "127.0.0.1",
+      "port": "7242",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "nest",
+      "service": "postgres",
+      "ip": "127.0.0.1",
+      "port": "7220",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "nest",
+      "service": "redis",
+      "ip": "127.0.0.1",
+      "port": "7221",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "nest",
+      "service": "s3",
+      "ip": "127.0.0.1",
+      "port": "7230",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "rs",
+      "service": "mailpit",
+      "ip": "127.0.0.1",
+      "port": "7325",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "rs",
+      "service": "mailpit",
+      "ip": "127.0.0.1",
+      "port": "7326",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "rs",
+      "service": "nats",
+      "ip": "127.0.0.1",
+      "port": "7322",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "rs",
+      "service": "nats",
+      "ip": "127.0.0.1",
+      "port": "7323",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "rs",
+      "service": "observability",
+      "ip": "127.0.0.1",
+      "port": "7340",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "rs",
+      "service": "observability",
+      "ip": "127.0.0.1",
+      "port": "7341",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "rs",
+      "service": "observability",
+      "ip": "127.0.0.1",
+      "port": "7342",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "rs",
+      "service": "postgres",
+      "ip": "127.0.0.1",
+      "port": "7320",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "rs",
+      "service": "redis",
+      "ip": "127.0.0.1",
+      "port": "7321",
+      "protocol": "tcp"
+    },
+    {
+      "lang": "rs",
+      "service": "s3",
+      "ip": "127.0.0.1",
+      "port": "7330",
+      "protocol": "tcp"
+    }
+  ]
+}

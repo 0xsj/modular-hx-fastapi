@@ -1,0 +1,70 @@
+The plugin "vite-tsconfig-paths" is detected. Vite now supports tsconfig paths resolution natively via the resolve.tsconfigPaths option. You can remove the plugin and set resolve.tsconfigPaths: true in your Vite config instead.
+
+ RUN  v4.1.11 /private/var/folders/_t/3ghz_tk90d53wy21s4tb20h80000gn/T/n2f-process-mutations-jz_8b_48/work
+
+ ❯ src/shared/logger/logger.spec.ts (8 tests | 1 failed) 16ms
+   × L01/L02 inclusive filtering and no-op effects 5ms
+ ❯ src/root/foundations.spec.ts (2 tests | 1 failed) 9ms
+   × F02/F03 output choices preserve workflow and scope relations 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/root/foundations.spec.ts > F02/F03 output choices preserve workflow and scope relations
+AssertionError: expected [ …(7) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "11:53:19.882 INFO n2f-foundations foundations.start {\"fields\":{\"simulated\":true,\"config\":[{\"key\":\"APP_ENV\",\"value\":\"development\",\"source\":\"default\",\"secret\":false},{\"key\":\"DEMO_TOKEN\",\"value\":\"[REDACTED]\",\"source\":\"environment\",\"secret\":true},{\"key\":\"DEMO_VERBOSE\",\"value\":\"false\",\"source\":\"default\",\"secret\":false},{\"key\":\"LOG_CAPACITY\",\"value\":\"256\",\"source\":\"default\",\"secret\":false},{\"key\":\"LOG_COLOR\",\"value\":\"never\",\"source\":\"environment\",\"secret\":false},{\"key\":\"LOG_FLUSH_MS\",\"value\":\"1000\",\"source\":\"default\",\"secret\":false},{\"key\":\"LOG_FORMAT\",\"value\":\"none\",\"source\":\"environment\",\"secret\":false},{\"key\":\"LOG_LEVEL\",\"value\":\"info\",\"source\":\"default\",\"secret\":false},{\"key\":\"LOG_MAX_BYTES\",\"value\":\"65536\",\"source\":\"default\",\"secret\":false},{\"key\":\"NO_COLOR\",\"value\":\"\",\"source\":\"default\",\"secret\":false},{\"key\":\"SERVICE_NAME\",\"value\":\"n2f-foundations\",\"source\":\"default\",\"secret\":false},{\"key\":\"SERVICE_NAMESPACE\",\"value\":\"n2f\",\"source\":\"default\",\"secret\":false},{\"key\":\"SERVICE_VERSION\",\"value\":\"dev\",\"source\":\"default\",\"secret\":false}],\"credential\":{\"token\":\"[REDACTED]\",\"public\":\"visible\"}},\"scope\":{\"scope_id\":\"01a09050-a70a-7778-b6c3-b3cbb1dfabee\",\"work_id\":\"01a09050-a70a-7778-b6c3-b3cbb1dfabee\",\"correlation_id\":\"01a09050-a70a-7778-b6c3-b3cbb1dfabee\",\"correlation_source\":\"local\",\"operation\":\"foundations.startup\",\"started_at_ms\":1789127599882,\"executor\":{\"kind\":\"service\",\"identity\":\"n2f-foundations\"},\"attempt\":1,\"attribution\":{},\"origin\":\"startup\",\"depth\":0}}
++ ",
++   "11:53:19.882 INFO n2f-foundations work.prepared {\"fields\":{\"simulated\":true,\"work_id\":\"01a09050-a70a-7779-bc05-e0ab8657a8f1\"},\"scope\":{\"scope_id\":\"01a09050-a70a-7778-b6c3-b3cbb1dfabee\",\"work_id\":\"01a09050-a70a-7778-b6c3-b3cbb1dfabee\",\"correlation_id\":\"01a09050-a70a-7778-b6c3-b3cbb1dfabee\",\"correlation_source\":\"local\",\"operation\":\"foundations.startup\",\"started_at_ms\":1789127599882,\"executor\":{\"kind\":\"service\",\"identity\":\"n2f-foundations\"},\"attempt\":1,\"attribution\":{},\"origin\":\"startup\",\"depth\":0}}
++ ",
++   "11:53:19.882 WARN n2f-foundations dependency.unavailable {\"fields\":{\"simulated\":true},\"scope\":{\"scope_id\":\"01a09050-a70a-777a-baa1-1ed4369e8b05\",\"work_id\":\"01a09050-a70a-7779-bc05-e0ab8657a8f1\",\"correlation_id\":\"01a09050-a70a-7778-b6c3-b3cbb1dfabee\",\"correlation_source\":\"local\",\"operation\":\"demo.export\",\"started_at_ms\":1789127599882,\"executor\":{\"kind\":\"service\",\"identity\":\"n2f-foundations\"},\"attempt\":1,\"attribution\":{},\"origin\":\"startup\",\"depth\":1,\"causation\":{\"kind\":\"scope\",\"id\":\"01a09050-a70a-7778-b6c3-b3cbb1dfabee\"}},\"error\":{\"classified\":true,\"kind\":\"unavailable\",\"type\":\"demo.offline\",\"public\":{\"kind\":\"unavailable\",\"message\":\"demo dependency unavailable\",\"type\":\"demo.offline\"},\"has_cause\":true}}
++ ",
++   "11:53:19.882 INFO n2f-foundations work.completed {\"fields\":{\"simulated\":true,\"result\":\"exported\",\"elapsed_ms\":0.182666},\"scope\":{\"scope_id\":\"01a09050-a70a-777b-8130-914356fd24fa\",\"work_id\":\"01a09050-a70a-7779-bc05-e0ab8657a8f1\",\"correlation_id\":\"01a09050-a70a-7778-b6c3-b3cbb1dfabee\",\"correlation_source\":\"local\",\"operation\":\"demo.export\",\"started_at_ms\":1789127599882,\"executor\":{\"kind\":\"service\",\"identity\":\"n2f-foundations\"},\"attempt\":2,\"attribution\":{},\"origin\":\"startup\",\"depth\":1,\"causation\":{\"kind\":\"scope\",\"id\":\"01a09050-a70a-7778-b6c3-b3cbb1dfabee\"},\"previous_attempt\":\"01a09050-a70a-777a-baa1-1ed4369e8b05\"}}
++ ",
++   "11:53:19.882 WARN n2f-foundations operation.conflict {\"fields\":{\"simulated\":true},\"scope\":{\"scope_id\":\"01a09050-a70a-7778-b6c3-b3cbb1dfabee\",\"work_id\":\"01a09050-a70a-7778-b6c3-b3cbb1dfabee\",\"correlation_id\":\"01a09050-a70a-7778-b6c3-b3cbb1dfabee\",\"correlation_source\":\"local\",\"operation\":\"foundations.startup\",\"started_at_ms\":1789127599882,\"executor\":{\"kind\":\"service\",\"identity\":\"n2f-foundations\"},\"attempt\":1,\"attribution\":{},\"origin\":\"startup\",\"depth\":0},\"error\":{\"classified\":true,\"kind\":\"conflict\",\"type\":\"demo.exists\",\"public\":{\"kind\":\"conflict\",\"message\":\"demo item already exists\",\"type\":\"demo.exists\"},\"has_cause\":false}}
++ ",
++   "11:53:19.882 ERROR n2f-foundations operation.unknown {\"fields\":{\"simulated\":true},\"scope\":{\"scope_id\":\"01a09050-a70a-7778-b6c3-b3cbb1dfabee\",\"work_id\":\"01a09050-a70a-7778-b6c3-b3cbb1dfabee\",\"correlation_id\":\"01a09050-a70a-7778-b6c3-b3cbb1dfabee\",\"correlation_source\":\"local\",\"operation\":\"foundations.startup\",\"started_at_ms\":1789127599882,\"executor\":{\"kind\":\"service\",\"identity\":\"n2f-foundations\"},\"attempt\":1,\"attribution\":{},\"origin\":\"startup\",\"depth\":0},\"error\":{\"classified\":false,\"kind\":\"internal\",\"public\":{\"kind\":\"internal\",\"message\":\"internal error\"},\"has_cause\":false}}
++ ",
++   "11:53:19.882 INFO n2f-foundations foundations.complete {\"fields\":{\"simulated\":true,\"completed\":1,\"refused\":1,\"attempts\":2,\"unknown\":1,\"elapsed_ms\":0.216416},\"scope\":{\"scope_id\":\"01a09050-a70a-7778-b6c3-b3cbb1dfabee\",\"work_id\":\"01a09050-a70a-7778-b6c3-b3cbb1dfabee\",\"correlation_id\":\"01a09050-a70a-7778-b6c3-b3cbb1dfabee\",\"correlation_source\":\"local\",\"operation\":\"foundations.startup\",\"started_at_ms\":1789127599882,\"executor\":{\"kind\":\"service\",\"identity\":\"n2f-foundations\"},\"attempt\":1,\"attribution\":{},\"origin\":\"startup\",\"depth\":0}}
++ ",
++ ]
+
+ ❯ src/root/foundations.spec.ts:49:19
+     47|     expect(out.join('')).not.toContain('private-SENTINEL');
+     48|     if (mode === 'none') {
+     49|       expect(out).toEqual([]);
+       |                   ^
+     50|       continue;
+     51|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/shared/logger/logger.spec.ts > L01/L02 inclusive filtering and no-op effects
+AssertionError: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ src/shared/logger/logger.spec.ts:44:23
+     42|     f.runtime.log.info('visible');
+     43|     expect((await f.runtime.close(1000)).ok).toBe(true);
+     44|     expect(f.calls()).toBe(format === 'none' ? 0 : 1);
+       |                       ^
+     45|     expect(f.lines.join('')).not.toContain('hidden');
+     46|     expect(f.lines.length).toBe(format === 'none' ? 0 : 1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 16 passed (18)
+      Tests  2 failed | 65 passed (67)
+   Start at  14:53:19
+   Duration  310ms (transform 754ms, setup 0ms, import 1.30s, tests 174ms, environment 1ms)
+

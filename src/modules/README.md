@@ -1,5 +1,8 @@
 # Business modules
 
+Identity's [principal leaves](identity/domain/CONTRACT.md) are implemented.
+Application operations and adapters follow the [domain plan](../../DOMAINS.md).
+
 Add a named module when there is a real feature. Its `domain/` owns business rules;
 `app/command/` and `app/query/` own use cases and their required ports; `infra/` supplies
 concrete adapters; `transport/` handles protocol translation. Create each directory

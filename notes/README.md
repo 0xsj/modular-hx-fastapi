@@ -1,10 +1,57 @@
 # Notes
 
+## First domain leaves
+
+- [Built-in authentication boundaries](modules/src/modules/identity/domain/authentication-boundaries.md).
+
+- [Principal invariants and verification](modules/src/modules/identity/domain/README.md).
+- [TypeScript ownership and syntax](modules/src/modules/identity/domain/language-walkthrough.md).
+- [Identity, audit and org ownership](../DOMAINS.md).
+
+## JetStream replacement
+
+- [Broker protocol and language findings](modules/src/shared/events/jetstream/protocol-and-ownership.md).
+- [Root selection and real verification](modules/src/root/jetstream-verification.md).
+- [Persistent broker setup](../JETSTREAM.md).
+
+## Infrastructure before domains
+
+- [validation: ownership and failure behavior](modules/src/shared/validation/ownership-and-failures.md).
+- [pagination: ownership and failure behavior](modules/src/shared/pagination/ownership-and-failures.md).
+- [postgres: ownership and failure behavior](modules/src/shared/postgres/ownership-and-failures.md).
+- [health: ownership and failure behavior](modules/src/shared/health/ownership-and-failures.md).
+- [Outbound HTTP lifecycle](modules/src/shared/httpclient/lifetimes.md).
+- [WebSocket lifetime and protocol](modules/src/shared/socket/lifetimes.md).
+- [Events and durable receipts](modules/src/shared/events/durable-receipts.md).
+- [Runtime verification and language comparison](modules/src/root/infrastructure-verification.md).
+
+
 Write what the code cannot explain, while the work is fresh. A useful note
 preserves an alternative that lost, a failure mode, a surprising dependency
 behavior, or reasoning that would otherwise have to be rediscovered.
 
 Do not write a note just to describe a newly created folder.
+
+## Telemetry into HTTP: implemented slice
+
+- [Slice and leaf order](../TELEMETRY_HTTP.md).
+- [Telemetry design/language notes](modules/src/shared/telemetry/README.md).
+- [HTTP completion and error-presence notes](modules/src/shared/http/README.md).
+- [Root signal wiring](modules/src/root/telemetry-http.md).
+
+These notes record the implemented native adapters, language-specific lifecycle
+choices and real process/collector verification.
+
+## Implemented process foundations
+
+The [runnable example](../FOUNDATIONS.md) composes all shared foundations.
+Module notes mirror their full source directories:
+
+- [Secret](modules/src/shared/secret/README.md): native presentation and disclosure.
+- [Env](modules/src/shared/env/README.md): presence, strict parsing and safe manifests.
+- [Provenance](modules/src/shared/provenance/README.md): identity lifetimes and transitions.
+- [Logger](modules/src/shared/logger/README.md): projections, native adapters and delivery.
+- [Root](modules/src/root/README.md): configuration, process ownership and actual executable checks.
 
 ## Clock and ID foundations
 

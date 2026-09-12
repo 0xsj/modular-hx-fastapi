@@ -1,0 +1,14 @@
+{
+  "note": "Captured initial tool result. Output may be truncated as marked; this is not a full raw command log.",
+  "result": {
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "1e7f56",
+      "wall_time_seconds": 0.673286584,
+      "exit_code": 1,
+      "original_token_count": 486,
+      "output": "Warning: truncated output (original token count: 486)\nTotal output lines: 62\n\nThe plugin \"vite-tsconfig-paths\" is detected. Vite now supports tsconfig paths resolution natively via the resolve.tsconfigPaths option. You can remove the plugin and set resolve.tsconfigPaths: true in your Vite config instead.\n\n RUN  v4.1.11 /Users/sj/Desktop/dev/builds/blueprints/n2f-nest\n\n ❯ src/shared/env/env.spec.ts (6 tests | 6 failed) 3ms\n   × V01 presence 2ms\n   × V02 parsers 0ms\n   × V03 definitions 0ms\n   × V04 failures 0ms\n   × V05 manifest 0ms\n   × V06 duplicate 0ms\n\n⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯\n\n FAIL  src/shared/env/env.spec.ts > V01 presence\nTypeError: map is not a function\n ❯ src/shared/env/env.spec.ts:3:43\n\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯\n\n FAIL  src/shared/env/env.spec.ts > V02 parsers\nTypeError: map is not a function\n ❯ src/shared/env/env.spec.ts:4:114\n\n\n⎯⎯⎯⎯⎯⎯⎯⎯…36 tokens truncated…ctor\n ❯ src/shared/env/env.spec.ts:5:35\n\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯\n\n FAIL  src/shared/env/env.spec.ts > V04 failures\nTypeError: map is not a function\n ❯ src/shared/env/env.spec.ts:6:43\n\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯\n\n FAIL  src/shared/env/env.spec.ts > V05 manifest\nTypeError: map is not a function\n ❯ src/shared/env/env.spec.ts:7:97\n\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯\n\n FAIL  src/shared/env/env.spec.ts > V06 duplicate\nTypeError: map is not a function\n ❯ src/shared/env/env.spec.ts:8:44\n\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯\n\n\n Test Files  1 failed (1)\n      Tests  6 failed (6)\n   Start at  12:55:46\n   Duration  116ms (transform 15ms, setup 0ms, import 21ms, tests 3ms, environment 0ms)\n\n"
+    }
+  }
+}
+

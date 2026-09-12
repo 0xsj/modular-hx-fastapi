@@ -1,0 +1,14 @@
+{
+  "note": "Captured initial tool result. Output may be truncated as marked; this is not a full raw command log.",
+  "result": {
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "973064",
+      "wall_time_seconds": 0.600304,
+      "exit_code": 1,
+      "original_token_count": 219,
+      "output": "The plugin \"vite-tsconfig-paths\" is detected. Vite now supports tsconfig paths resolution natively via the resolve.tsconfigPaths option. You can remove the plugin and set resolve.tsconfigPaths: true in your Vite config instead.\n\n RUN  v4.1.11 /Users/sj/Desktop/dev/builds/blueprints/n2f-nest\n\n ❯ src/root/foundations.spec.ts (0 test)\n\n⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯\n\n FAIL  src/root/foundations.spec.ts [ src/root/foundations.spec.ts ]\nError: Cannot find module './demo.js' imported from /Users/sj/Desktop/dev/builds/blueprints/n2f-nest/src/root/foundations.spec.ts\n ❯ src/root/foundations.spec.ts:3:1\n\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯\n\n\n Test Files  1 failed (1)\n      Tests  no tests\n   Start at  14:25:35\n   Duration  154ms (transform 33ms, setup 0ms, import 0ms, tests 0ms, environment 0ms)\n\n"
+    }
+  }
+}
+

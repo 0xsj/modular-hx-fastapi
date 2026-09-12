@@ -1,9 +1,9 @@
 # Observability
 
 Observability is part of the foundation in every n2f build. The local backend is
-runnable today; the requirements below guide the first logger, provenance and
-application instrumentation modules. They are not yet implemented application
-capabilities.
+runnable today. Provenance and console/JSON/no-op logging are implemented through
+the foundations command. The diagnostic HTTP process now exports application logs, traces and metrics;
+[telemetry into HTTP](TELEMETRY_HTTP.md) documents its adapters and settings.
 
 ## Local signal path
 
@@ -23,7 +23,8 @@ its data, and starts it by default. Grafana is at `http://127.0.0.1:7240` with
 local login `n2f` / `n2f_local`. The bundled Pyroscope store is also available as a
 Grafana data source; profiling is not part of the current smoke example.
 
-Suggested SDK environment for a future application running on the host:
+Standard SDK environment for other applications running on the host (the n2f
+diagnostic process uses the explicit TELEMETRY_* settings in its run guide):
 
 ```sh
 export OTEL_SERVICE_NAME=n2f-nest
@@ -114,3 +115,26 @@ observability interface in advance.
 A health check probes components on every run; it does not rely on a stale startup
 marker. Docker marking a container unhealthy is diagnostic and does not by itself
 restart it. Persistence and synthetic export checks are recorded in [STATUS.md](STATUS.md).
+
+## Implemented provenance and pending transport adapters
+
+The [provenance core](src/shared/provenance/CONTRACT.md) implements work/execution identity,
+attribution, start time, replay/causal links and pure incoming-hint inspection.
+The logger implements its explicit safe scope projection. Native HTTP/WebSocket
+carriers, wire propagation and OTLP integration still need adapter tests.
+The new [telemetry](src/shared/telemetry/CONTRACT.md) and
+[HTTP](src/shared/http/CONTRACT.md) specifications keep trace identity separate and
+give request completion one owner. Future WebSocket messages need separate scopes.
+Service/build identity remains a resource concern; event occurrence and record
+timestamps retain their own owners. Core tests do not establish those integrations.
+
+## Application delivery verification
+
+Use the named HTTP diagnostic process and tools/verify_http.py for real requests.
+tools/telemetry/verify_http_delivery.py retrieves the matching service instance
+from Tempo, Loki and Prometheus using the recorded event timestamps.
+
+The duration histogram is stored as http_server_request_duration_seconds_count
+(and the corresponding bucket/sum series). Low-cardinality request attributes
+are separate from trace IDs and n2f scope/work/correlation log attributes.
+Sampling out spans retains completion logs and duration metrics.

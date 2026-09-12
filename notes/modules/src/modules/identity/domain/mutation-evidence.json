@@ -1,0 +1,42 @@
+{
+  "language": "nest",
+  "caught": 4,
+  "selected": 4,
+  "exhaustive": false,
+  "evidence": ".",
+  "cases": [
+    {
+      "name": "stale_version",
+      "caught": true,
+      "compiled": true,
+      "source_sha256": "bb4f815790a1831e0910ba9b9e0f92d7df6d403a84259a3cd770e7650496835e"
+    },
+    {
+      "name": "same_state",
+      "caught": true,
+      "compiled": true,
+      "source_sha256": "bb4f815790a1831e0910ba9b9e0f92d7df6d403a84259a3cd770e7650496835e"
+    },
+    {
+      "name": "version_increment",
+      "caught": true,
+      "compiled": true,
+      "source_sha256": "bb4f815790a1831e0910ba9b9e0f92d7df6d403a84259a3cd770e7650496835e"
+    },
+    {
+      "name": "restore_history",
+      "caught": true,
+      "compiled": true,
+      "source_sha256": "bb4f815790a1831e0910ba9b9e0f92d7df6d403a84259a3cd770e7650496835e"
+    }
+  ],
+  "verified_on": "2026-09-12",
+  "logs": [
+    "baseline.log",
+    "restore_history.log",
+    "restored.log",
+    "same_state.log",
+    "stale_version.log",
+    "version_increment.log"
+  ]
+}

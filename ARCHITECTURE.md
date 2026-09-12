@@ -1,13 +1,23 @@
 # Architecture
 
+## First domain slice
+
+[Identity, audit and org ownership](DOMAINS.md) is defined. Identity currently
+implements pure principal values and lifecycle transitions. Application ports,
+transactional persistence and domain transport follow those leaves; audit and org
+are planned. Principal references alone confer no authentication or org authority.
+[Authentication](AUTHENTICATION.md) is required within identity, independent of an
+account/profile domain. Credential/session/challenge contracts precede their adapters.
+
 Build a modular monolith with boundaries around domain ownership. Keep the useful
 responsibilities familiar across the nine to five family while using TypeScript
 and NestJS where they fit. Folder similarity alone establishes neither behavioral
 compatibility nor the ability to extract a module into a service.
 
-These are review-held rules. There is no architecture checker yet. The initial
-runtime is only Nest's greeting example, now composed in `src/root/`; the domain and
-application boundaries below become concrete with the first business module.
+These are review-held rules. There is no architecture checker yet. The foundations
+command composes the implemented shared modules; Nest's greeting remains an
+independent HTTP example at `src/root/`. Domain and application boundaries below
+become concrete with the first business module.
 
 ## Dependency direction
 
@@ -57,8 +67,10 @@ establishes their contract.
 consumer, which may be the process itself. Separate framework-free shared values
 from infrastructure integrations as they appear. Avoid a catch-all utilities
 directory or a base abstraction that makes
-unrelated domains depend on one another. Logger, provenance, errors, configuration,
-and storage are future work, not implemented guarantees.
+unrelated domains depend on one another. Errors, clock, IDs, secrets, env parsing,
+provenance and logging are implemented shared foundations. Root owns typed config
+and the foundations command. HTTP/telemetry, PostgreSQL, outbound HTTP, WebSockets
+and events now have concrete adapters and executable diagnostics.
 
 Clocks, identifier generation, persistence, and publishing belong in explicit use-case
 dependencies when needed. Make success and failure meaningful at the application
@@ -69,8 +81,9 @@ Before introducing a command that both writes state and publishes an event, defi
 its transaction owner, commit boundary, and delivery guarantee. A decorator or a
 sequence of awaited calls does not itself make the two effects atomic. A database
 transaction, durable event recording, retries, and receipts each need concrete
-implementation and verification before callers can rely on them. None exists here
-yet.
+implementation and verification before callers can rely on them. The shared
+outbox/mailbox adapter now establishes these infrastructure guarantees against
+PostgreSQL; each domain must still place its effects inside that boundary.
 
 ## Process and evidence
 
@@ -107,4 +120,63 @@ For state-changing event workflows, atomically record the event in an outbox. Ke
 delivery separately owned so JetStream or a simpler dispatcher can be supplied
 without moving the transaction boundary. Swapping adapters requires equivalent
 failure/retry/duplicate scenarios; an interface alone does not establish parity.
-The first event and WebSocket implementations still need concrete wire contracts.
+The event and WebSocket contracts and concrete diagnostics are implemented;
+see [the infrastructure guide](INFRASTRUCTURE_BUILD.md).
+
+## Provenance ownership
+
+[src/shared/provenance](src/shared/provenance/README.md) implements immutable execution
+scopes and stable WorkContext. Initiator, executor, represented principal and
+tenant have explicit lifetimes. Replays open a new chain linked to original work;
+extra causal links belong beside an owning envelope. Public correlation hints
+and validated persisted work are different admission paths.
+
+The core consumes shared IDs/errors and narrow clock/generation capabilities.
+The logger's explicit scope projection is implemented. Runtime context carriers,
+HTTP/WebSocket propagation, broker codecs, tracing and public/audit projections
+remain adapters. Scope is not an authorization context, transaction receipt,
+deduplication record or domain evidence model. P01–P19/P23 have core evidence;
+P20–P22/P24 remain adapter/integration requirements.
+
+## Telemetry into HTTP
+
+[The diagnostic HTTP slice](TELEMETRY_HTTP.md) is implemented and verified with real
+requests and stored OTLP signals.
+Telemetry owns trace/outcome values and concrete SDK delivery. HTTP owns safe wire
+projection, ingress admission and request completion, and declares the observation
+capability its adapter needs. Root wires providers and shares service resources
+and the shutdown budget. SDK types stay within root and concrete adapters; shared
+value leaves and application contracts do not import them.
+
+Use a real diagnostic request before introducing a business domain. Keep failures,
+refusals, sampling and transport termination distinct. Neither an SDK dependency
+nor an interface demonstrates export, delivery or frontend compatibility.
+
+## Implemented request boundary
+
+The diagnostic HTTP process composes existing foundations with the native adapter
+and concrete OTel providers. One validated service instance is shared by logging
+and SDK resources. Completion classification preserves application failure meaning
+separately from the server's final response/termination facts.
+
+Root stops admission, drains admitted work, then closes providers and local logging
+with the remaining process budget. Collector failure has no response-policy branch.
+Exact queue drops are not inferred from generic SDK diagnostics. The first consumer
+is bounded JSON. PostgreSQL, outbound HTTP, sockets and events now have separate
+owners and concrete diagnostics. Authentication and streaming business workflows
+remain domain work.
+
+## Infrastructure ownership before domains
+
+The [implemented slice](INFRASTRUCTURE_BUILD.md) adds pure validation/pagination,
+PostgreSQL, readiness, outbound HTTP, sockets and events in that order. Root owns
+resource construction, readiness dependencies, diagnostic consumers and shutdown.
+Database transactions expose driver types only to concrete persistence adapters;
+domain/application ports must use their own vocabulary. No generic repository or
+shared business transaction interface has been imposed before a domain needs one.
+
+An outbox is an atomic recording mechanism. Publisher is a separate durable-delivery
+capability. PostgreSQL mailbox and JetStream are implemented publisher adapters;
+[real JetStream checks](JETSTREAM.md) cover publication and durable handoff. Mailbox deduplication and consumer effects
+share a transaction. This single destination does not establish fanout, global
+ordering, exactly-once processing or a future audit retention policy.

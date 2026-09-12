@@ -1,0 +1,324 @@
+{
+  "language": "n2f-nest",
+  "scope": "hand-selected secret/env/provenance/logger/root faults",
+  "build_command": [
+    "node",
+    "node_modules/typescript/bin/tsc",
+    "--noEmit"
+  ],
+  "test_command": [
+    "node",
+    "node_modules/vitest/vitest.mjs",
+    "run"
+  ],
+  "baseline_build_passed": true,
+  "baseline_passed": true,
+  "results": [
+    {
+      "module": "secret",
+      "mutant": "json_discloses",
+      "file": "src/shared/secret/value.ts",
+      "before": "  toJSON(): string {\n    return '[REDACTED]';\n  }\n",
+      "after": "  toJSON(): string {\n    return this.#value;\n  }\n",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/shared/secret/secret.spec.ts > secret contract > S04 S05 S06 preserves public fields through JSON and inspection",
+        "src/shared/secret/secret.spec.ts > secret contract > S08 S09 keeps private storage and absence distinct"
+      ]
+    },
+    {
+      "module": "secret",
+      "mutant": "primitive_discloses",
+      "file": "src/shared/secret/value.ts",
+      "before": "  [Symbol.toPrimitive](): string {\n    return '[REDACTED]';\n  }\n",
+      "after": "  [Symbol.toPrimitive](): string {\n    return this.#value;\n  }\n",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/shared/secret/secret.spec.ts > secret contract > S01 S02 S03 S07 preserves input and redacts conversions"
+      ]
+    },
+    {
+      "module": "env",
+      "mutant": "empty_becomes_absent",
+      "file": "src/shared/env/reader.ts",
+      "before": "  string(key: string, fallback: string): string {\n    const r = this.#read(key);\n    if (!r.valid) return '';\n    const v = r.value ?? fallback;\n    this.#record(key, v, r.value !== undefined);\n    return v;\n  }\n",
+      "after": "  string(key: string, fallback: string): string {\n    const r = this.#read(key);\n    if (!r.valid) return '';\n    const v = r.value || fallback;\n    this.#record(key, v, r.value !== undefined);\n    return v;\n  }\n",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/shared/env/env.spec.ts > V01 presence"
+      ]
+    },
+    {
+      "module": "env",
+      "mutant": "manifest_discloses",
+      "file": "src/shared/env/reader.ts",
+      "before": "value: secret ? '[REDACTED]' : value",
+      "after": "value: value",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/root/foundations.spec.ts > F02/F03 output choices preserve workflow and scope relations",
+        "src/shared/env/env.spec.ts > V05 manifest"
+      ]
+    },
+    {
+      "module": "env",
+      "mutant": "false_becomes_true",
+      "file": "src/shared/env/reader.ts",
+      "before": "v = r.value === 'true';",
+      "after": "v = r.value === 'false';",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/shared/env/env.spec.ts > V02 parsers"
+      ]
+    },
+    {
+      "module": "provenance",
+      "mutant": "retry_skips_ordinal",
+      "file": "src/shared/provenance/factory.ts",
+      "before": "s.attempt + 1",
+      "after": "s.attempt + 0",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/root/foundations.spec.ts > F02/F03 output choices preserve workflow and scope relations",
+        "src/shared/provenance/provenance.spec.ts > P03 P04 P05 P06 P07 P08 P09 transitions"
+      ]
+    },
+    {
+      "module": "provenance",
+      "mutant": "child_loses_depth",
+      "file": "src/shared/provenance/factory.ts",
+      "before": "w.depth++;",
+      "after": "w.depth += 0;",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/root/foundations.spec.ts > F02/F03 output choices preserve workflow and scope relations",
+        "src/shared/provenance/collision.spec.ts > P23 explicit cause cannot hide reused execution identity",
+        "src/shared/provenance/provenance.spec.ts > P03 P04 P05 P06 P07 P08 P09 transitions",
+        "src/shared/provenance/provenance.spec.ts > P10 P11 bounds and wall corrections",
+        "src/shared/provenance/provenance.spec.ts > P12 P23 validates before effects and forwards failures",
+        "src/shared/provenance/provenance.spec.ts > P14 replay"
+      ]
+    },
+    {
+      "module": "provenance",
+      "mutant": "cause_without_correlation",
+      "file": "src/shared/provenance/incoming.ts",
+      "before": "else if (correlation === undefined)",
+      "after": "else if (false)",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/shared/provenance/provenance.spec.ts > P15 P16 P17 incoming dispositions"
+      ]
+    },
+    {
+      "module": "provenance",
+      "mutant": "collision_guard_removed",
+      "file": "src/shared/provenance/factory.ts",
+      "before": "forbidden.includes(scopeId)",
+      "after": "(forbidden.includes(scopeId) && false)",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/shared/provenance/collision.spec.ts > P23 explicit cause cannot hide reused execution identity"
+      ]
+    },
+    {
+      "module": "logger",
+      "mutant": "exclusive_floor",
+      "file": "src/shared/logger/runtime.ts",
+      "before": "rank[severity] < rank[level.value]",
+      "after": "rank[severity] <= rank[level.value]",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/root/foundations.spec.ts > F02/F03 output choices preserve workflow and scope relations",
+        "src/root/logger.adapter.spec.ts > routes Nest severity and context without printing raw framework errors",
+        "src/shared/logger/boundary.spec.ts > L09 maximum supported time keeps the UTC console clock shape",
+        "src/shared/logger/boundary.spec.ts > L03 unsupported array accessors are refused without invoking them",
+        "src/shared/logger/logger.spec.ts > L01/L02 inclusive filtering and no-op effects",
+        "src/shared/logger/logger.spec.ts > L03/L10 immutable fields, nested redaction and real JSON output",
+        "src/shared/logger/logger.spec.ts > L06 explicit color and control escaping",
+        "src/shared/logger/logger.spec.ts > L07 failure cannot throw from log emission",
+        "src/shared/logger/logger.spec.ts > L08 bounded queue and close deadline",
+        "src/shared/logger/logger.spec.ts > L09 invalid config/time/size and closed emission",
+        "src/shared/logger/logger.spec.ts > L03 safely refuses cyclic fields without raw display"
+      ]
+    },
+    {
+      "module": "logger",
+      "mutant": "noop_emits",
+      "file": "src/shared/logger/runtime.ts",
+      "before": "format === 'none' || rank[severity]",
+      "after": "rank[severity]",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/root/foundations.spec.ts > F02/F03 output choices preserve workflow and scope relations",
+        "src/shared/logger/logger.spec.ts > L01/L02 inclusive filtering and no-op effects"
+      ]
+    },
+    {
+      "module": "logger",
+      "mutant": "ignores_no_color",
+      "file": "src/shared/logger/config.ts",
+      "before": "terminal && !noColor",
+      "after": "terminal",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/shared/logger/logger.spec.ts > L06 explicit color and control escaping"
+      ]
+    },
+    {
+      "module": "logger",
+      "mutant": "queue_exceeds_capacity",
+      "file": "src/shared/logger/delivery.ts",
+      "before": "this.#queue.length >= this.capacity",
+      "after": "this.#queue.length > this.capacity",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/shared/logger/logger.spec.ts > L08 bounded queue and close deadline"
+      ]
+    },
+    {
+      "module": "logger",
+      "mutant": "cause_presence_inverted",
+      "file": "src/shared/logger/projection.ts",
+      "before": "causeOf(error) !== undefined",
+      "after": "causeOf(error) === undefined",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/shared/logger/logger.spec.ts > L04/L05 safe scope and failure projections"
+      ]
+    },
+    {
+      "module": "root",
+      "mutant": "summary_loses_retry",
+      "file": "src/root/demo.ts",
+      "before": "attempts: 2",
+      "after": "attempts: 1",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/root/foundations.spec.ts > F02/F03 output choices preserve workflow and scope relations"
+      ]
+    }
+  ],
+  "source_hashes": {
+    "pnpm-lock.yaml": "5d2cceea1fda3b7bbfc3262d80b880864b5207f23c9904ea58e7728afa688de1",
+    "package.json": "a599298cf0cc80ba0fe293efd19093bc618e05a39f192b7a230d577f31b7a0a0",
+    "tsconfig.build.json": "4d3e73204cf9fbad4e5396f70aab7aa88cb1e93f0ab307123c3265b9c74e1504",
+    "tsconfig.json": "627754a577c23bdf9e965f5740d9e778e072f8a798361a0314cf3bb2a4b18613",
+    "vitest.config.ts": "8fafca686508b9e08f41349d47ea712125c29a588caa6238791362fe2ac07551",
+    "vitest.config.e2e.ts": "1aa4b32d1c2a0268f5ae642d60d636902a29db541b41becf139c1d8ee1366310",
+    "test/app.e2e-spec.ts": "83dbe937f9c5d6b03e98d0681ce861be00303a3aa8b47e758be760beaa907d62",
+    "src/foundations.ts": "9d9d17275859cc00f74e89c5224fbec50a6c0b2b12c306eecfd1d3bd8872e38b",
+    "src/main.ts": "35f91c08888384612e221f24b67e429a371947c97aa141db982e83858d560059",
+    "src/shared/README.md": "bc4542a0d23017654da8e52bd94c1ebaaf35439ae82a05e8e3d1d669fa20b6cf",
+    "src/root/demo.ts": "41a518dfaaf80e935237e5ce288e752079936cef554eeff00b9e8804b6f7c6e4",
+    "src/root/logger.adapter.ts": "73752bf4940a9f7af9876cd5099f3aef6a669cd76ead00e4a25d4afb1c74edab",
+    "src/root/app.service.ts": "eaf8514ce110fa428a93a27408df4d06d133dbd9ed0a775c315ddfdd507853a9",
+    "src/root/CONTRACT.md": "6d2f931ab34f4db5885ef5ee950d6608ab6c3bc8948cd8988de5e1c18ded4d64",
+    "src/root/logger.adapter.spec.ts": "abbe4563dc708b900165e26364fdfc690a85a84a5e6d7b80779615f02e79413b",
+    "src/root/app.module.ts": "f5f9332c8fa3aa76550ab26a69ed2b654e293690230f8c9fbeaf7ea1129a0b2e",
+    "src/root/README.md": "1f3736508fb6c7ddd820b79d50fcee275ede63b66a7971c4986030e4bb18ee03",
+    "src/root/app.controller.spec.ts": "97c79df954aafe787ec44ed0da64f146a41affe994eb9a6c02b57eebfdb4477a",
+    "src/root/app.controller.ts": "6f4dffdd41c8ebf932dd522d1cf14f252704e38767b93ef9b0ce84e165b69265",
+    "src/root/foundations.spec.ts": "da5aa99f9eb7cab24cffac789affeb16dd1e3e06074efa24b7afae43c3b3af12",
+    "src/root/config.ts": "5bc2ca647880346486057d8e9b8930218c6be1894f81eb6721d1fd51dd3a181c",
+    "src/root/logging.ts": "11f98deeeba2847bc5750face55bf416651a42d088e08119acbbc934cfb17d98",
+    "src/modules/README.md": "220dce18eca3e3d6e533299be2c405bb975c92b583d0c76b15751b0444fd21d8",
+    "src/shared/logger/projection.ts": "0ea86d71f38e392eb195906f12e59c14c0d775049f865cb86f136121b7cae908",
+    "src/shared/logger/controls.spec.ts": "d24f753a2b27c94e4be1a48cc408866a0ec009569aaaf4ea5555d8330d260bc8",
+    "src/shared/logger/CONTRACT.md": "6fbc56de032eee154e1e6ddf12b1edf2ccb3cf6413ae72309f943e17344ad388",
+    "src/shared/logger/boundary.spec.ts": "65e5d66ac8c0ceb9e61e28901ee5fde49484855a27d0ae88f4df1103f62a3e98",
+    "src/shared/logger/README.md": "fcec20305875c82b765750a90f05c0c0a2cfb63a96377e72c1e9c05075ab749e",
+    "src/shared/logger/runtime.ts": "5cc6d28289fa14ad027bfa2cd62f2f2b97ac6d3b148dd36543f027b9f876a96e",
+    "src/shared/logger/index.ts": "4bd95d4eed5149aa336768a68e61fd75845091bff5d71b5d41b1ee535a36d554",
+    "src/shared/logger/fields.ts": "5ea16bb76afd34d2274fc999fc0862c64e4da4ea29426d7d070637eb17ac0df4",
+    "src/shared/logger/config.ts": "4b63021e4931b63b33857b741331b694709225c21753f8d0a2170468c063e7e2",
+    "src/shared/logger/logger.spec.ts": "7a92e8882924358bb1317c0dd1ec9d112e72c5a3fbcac8b31ef641bf23ff5d65",
+    "src/shared/logger/delivery.ts": "32a4c434742e6ce2aa89c41d6210ff1565ca4ebf1753f386257d2914ab1e79af",
+    "src/shared/env/env.spec.ts": "99c28ec33cc9c5fe470d1673d51b382910aec4529504112229a6c176f5d45133",
+    "src/shared/env/parse.ts": "4a91418b2240f3ad7980b0cc1712b941abdf04df5e09fe66f37da15db77242ba",
+    "src/shared/env/CONTRACT.md": "fd3d439f6a60b62602cdf26ccb3aecda899579db6174ededb9c43447e063b48c",
+    "src/shared/env/reader.ts": "464d36be36b74ade00f4f91ace7cc93502e243281bfcff33e4c506db53e63939",
+    "src/shared/env/boundary.spec.ts": "9ccd1d043261aea17d8b8a93e89f7692cdf04d132cdc8759171a85ff6f2530df",
+    "src/shared/env/README.md": "7c0c29a9e08dbc042b272040c4a35d6fc799c8254f0c890a4e3782c8968bdcd5",
+    "src/shared/env/os.spec.ts": "f9ebf1f798b3b1345ac1b3d17698fbab8705b106a67dcaa9272884b2c300ff2e",
+    "src/shared/env/os.ts": "775f568e45e4f16ecbce9772f404aa9c62cc6cf3de8b0fb203ad1a087379ee61",
+    "src/shared/env/lookup.ts": "cafefb4bfe298ecdbf7787eb9c83f525146211bb61110798911091405dfb6f81",
+    "src/shared/env/index.ts": "380a3ac40148ef1e9c9367e1513e8ddf46c0dc54af89409d79b8bb93ab3b42ee",
+    "src/shared/provenance/incoming.ts": "bc2bb8cc603ce7f3dfa0989be6cba5cb46fe07ff25cd5d5dbf4f3c00ac350f10",
+    "src/shared/provenance/scope.ts": "b04b4195a5c4a5e436760b0846f29d459c164a49a9cf0ae88b59b59a031ff118",
+    "src/shared/provenance/API.md": "344f91240a676d4d10e44f6df50c85c4976cbccc562a4ef77c4353600e651f58",
+    "src/shared/provenance/actor.ts": "0ddac487e0f1159f1909789bf42cb8593d0d2e6689a5488fa4f12a2a4fc97669",
+    "src/shared/provenance/reference.ts": "0456c8c5b5cc1dc76cce59ab48587b262ff991577a15fa877fa5a241bde3c965",
+    "src/shared/provenance/attribution.ts": "e7959de21742c914c24c982c8b7fc07089e93f1f5cace20c58ac04b7fa00d781",
+    "src/shared/provenance/CONTRACT.md": "519399045b07b9fb16dbe9c103d5d7528f2aa83816f98f378154dbb0f0121e4a",
+    "src/shared/provenance/work.ts": "066d6ce41925b4e2a13df42b3f70475875b45e91fd664dfd0a38f00b821a3ffb",
+    "src/shared/provenance/boundary.spec.ts": "997ce7913d46b7b9461a0729e239f4c5e00069c0bc9352cf56f7ffa0b53da434",
+    "src/shared/provenance/operation.ts": "2605c64ba6b083e1fd8ed97002d07cf75d1419b6c24d9360314f99e1c79ef465",
+    "src/shared/provenance/factory.ts": "ed37e070b25616ccec70f0bc81f66ea311b678cc753ba69adbda4ef42e714b99",
+    "src/shared/provenance/README.md": "ef32ad8021ba9672520ae734db384df0a3b204ea3d49b1c5114481325c81898e",
+    "src/shared/provenance/links.ts": "96c38f763252c604c87f70af326c72bfb0eeaa8ce2d8802ac91db3c562b2d62a",
+    "src/shared/provenance/SCENARIOS.md": "4a9e424f2d70cd68c810e616fc9ba04816bac9c68c2aa847dd67ca4972842e24",
+    "src/shared/provenance/collision.spec.ts": "dcd6c85bd0f9f6fca8db8364c6dfb6af0d19707a0490756bf25ffcdc65f04376",
+    "src/shared/provenance/index.ts": "e3ad6991f9aba5ef87467d52677938a17aef760b9f5af9297725fd4bb0fe0d8e",
+    "src/shared/provenance/provenance.spec.ts": "b2a940228ee99eba4b5eb32c2dfd26acf471dd0781e8053e9cb1315c3c3ee72b",
+    "src/shared/id/v7.ts": "8def16848a991c9e022aee98037f2a34bbfd2b0cf925e3019a44f1f4d56f3d38",
+    "src/shared/id/example.spec.ts": "d10a182c95fd333956c6ef9591635013c4acd1f2a47694ef5e322e9a74495ded",
+    "src/shared/id/value.ts": "14b92c6f080333b810e7a6d2a6d3136d74ff38cb9e2e8d0e17fe400f13a83c2a",
+    "src/shared/id/CONTRACT.md": "290f8c10053d2ed4beb75fd521cbc0a4e9e7462380c6015ea753e7e766186ce6",
+    "src/shared/id/README.md": "8dd572d8812e6176eaf0adc86bb188a242017d4feeb681bf2303fcd699106825",
+    "src/shared/id/id.spec.ts": "bc07471c942d1fd146f231366020b469251a42d1c5f93925d6b204aa365402f5",
+    "src/shared/id/sequence.ts": "f1513dcc1dc14a013450f17276f1791d962d004e50d0462fbfbd5f8d1ac81e71",
+    "src/shared/id/index.ts": "8b458bb006bf42d8b460a083fd796cf42edb4e4e7bd58bf2f20bd9e1bc4a6b1a",
+    "src/shared/secret/value.ts": "6ead9b4c1e5ea1675b9aacaaa57940d1b9e888acc7115699b5d0dc39237de5c7",
+    "src/shared/secret/CONTRACT.md": "293efbaa175dc0086fa9ba5568acaeb2794e6472b93d7913d84ba8e4c1689587",
+    "src/shared/secret/README.md": "c6a3fc47d0024312fd2b1f7faead02e217f444154f0c3a26ae5e794d6efc31e2",
+    "src/shared/secret/secret.spec.ts": "ccd9db760528db1db8aba5f0af413f07a9322beffc7559c4adcd1f22feb11f09",
+    "src/shared/secret/index.ts": "e2e9649e13edcd9e674a6dc4a2c48fe74e94ed224f44eb377c896808a0e46a18",
+    "src/shared/errors/example.spec.ts": "99fe8bdb730be5e490e396413b71554454c8cc256c01a03d6988a435c0ba1c6e",
+    "src/shared/errors/errors.spec.ts": "78d9f1ff21a0f8e759e33e437b42069384436eab09b58572abb94990da7aee43",
+    "src/shared/errors/failure.ts": "5fa7b606b0e31da9ef41131c4b4fdc1d2a0e6cc231d0822c865df63bddf6cbcc",
+    "src/shared/errors/result.ts": "ebed7c2c0cddebaebbeffd9cd748b83ea951206245988a615cb6708d6940eaa7",
+    "src/shared/errors/CONTRACT.md": "0dfb0fc274bf466d428be2d79adef47c9a53782312b4516145075f5767e4e53d",
+    "src/shared/errors/README.md": "d6ebee86a3da8da73806fa8aefd9bd10b8fab92aa101615418dc6d2f1048d9f8",
+    "src/shared/errors/index.ts": "490e4801a8be60970eeb20ea8dca1e2cde54a5409f52d00de0484008ba7f5fc2",
+    "src/shared/errors/kind.ts": "291aa4ea546de1ae0c2bf522f00c390bc38b0ebb712662cecfa88fe6e8aaec09",
+    "src/shared/clock/CONTRACT.md": "01f906fcdbc823322c20a4d5c989b90db84e0b980018e212db7929fce422f730",
+    "src/shared/clock/README.md": "adbf4fa2dad861701f8d20a8e695c6feb90e4dd412ede5053aecfe07b0140738",
+    "src/shared/clock/clock.ts": "6634d51a3c19344a94a5bdb97b7983fb5f4d5ed3b179fbcd7b4a5b2c9d98e351",
+    "src/shared/clock/index.ts": "01ac7bb3ec039dc5e2162b61e08f289337548b4c231393eccef4944758f5378f",
+    "src/shared/clock/clock.spec.ts": "a731c53d1bc25a463e2d58bd6f36626af9281792712cfbc76336b83ba98f1e1c"
+  },
+  "restored_baseline_passed": true,
+  "workspace_unchanged": true,
+  "copy_restored": true
+}

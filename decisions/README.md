@@ -8,6 +8,18 @@ Routine reversible implementation choices do not need numbered records.
 
 ## Accepted
 
+- [0011 — Identity includes credentials and revocable sessions](0011-identity-includes-credentials-and-revocable-sessions.md)
+
+- [0010 — JetStream hands off into a durable mailbox](0010-jetstream-hands-off-into-durable-mailbox.md)
+
+- [0009 — Outbox recording and replaceable delivery](0009-outbox-recording-and-replaceable-delivery.md)
+
+- [0007 — HTTP owns request completion and telemetry stays replaceable](0007-http-owns-request-completion-and-telemetry-stays-replaceable.md)
+
+- [0006 — Process logging owns projections and bounded delivery](0006-process-logging-owns-projections-and-bounded-delivery.md)
+
+- [0005 — Provenance separates logical work from its executions](0005-provenance-separates-work-from-executions.md)
+
 - [0004 — Wall time and UUID generation have explicit state](0004-wall-time-and-uuid-generation-have-explicit-state.md)
 
 - [0003 — Errors preserve meaning across boundaries](0003-errors-preserve-meaning-across-boundaries.md)
@@ -55,3 +67,6 @@ be separate operations; a failed check must never rewrite its baseline.
 [ARCHITECTURE.md](../ARCHITECTURE.md) is the current working map.
 [Notes](../notes/README.md) preserve discoveries; [status](../STATUS.md) records
 progress and corrections.
+
+The HTTP/OTLP implementation follows
+[0008: diagnostic HTTP and bounded OTLP](0008-diagnostic-http-and-bounded-otlp.md).

@@ -1,0 +1,50 @@
+{
+  "language": "nest",
+  "scenarios": [
+    {
+      "scenario": "json",
+      "exit": 0
+    },
+    {
+      "scenario": "console",
+      "exit": 0
+    },
+    {
+      "scenario": "none",
+      "exit": 0
+    },
+    {
+      "scenario": "debug",
+      "exit": 0
+    },
+    {
+      "scenario": "floor",
+      "exit": 0
+    },
+    {
+      "scenario": "invalid",
+      "exit": 2
+    },
+    {
+      "scenario": "empty_string",
+      "exit": 0
+    },
+    {
+      "scenario": "color_always",
+      "exit": 0
+    },
+    {
+      "scenario": "color_auto_pipe",
+      "exit": 0
+    },
+    {
+      "scenario": "color_auto_terminal",
+      "exit": 0
+    },
+    {
+      "scenario": "color_no_color_terminal",
+      "exit": 0
+    }
+  ],
+  "passed": 11
+}

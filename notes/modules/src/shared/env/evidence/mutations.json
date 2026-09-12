@@ -1,0 +1,50 @@
+{
+  "language": "n2f-nest",
+  "results": [
+    {
+      "module": "env",
+      "mutant": "empty_becomes_absent",
+      "file": "src/shared/env/reader.ts",
+      "before": "  string(key: string, fallback: string): string {\n    const r = this.#read(key);\n    if (!r.valid) return '';\n    const v = r.value ?? fallback;\n    this.#record(key, v, r.value !== undefined);\n    return v;\n  }\n",
+      "after": "  string(key: string, fallback: string): string {\n    const r = this.#read(key);\n    if (!r.valid) return '';\n    const v = r.value || fallback;\n    this.#record(key, v, r.value !== undefined);\n    return v;\n  }\n",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/shared/env/env.spec.ts > V01 presence"
+      ]
+    },
+    {
+      "module": "env",
+      "mutant": "manifest_discloses",
+      "file": "src/shared/env/reader.ts",
+      "before": "value: secret ? '[REDACTED]' : value",
+      "after": "value: value",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/root/foundations.spec.ts > F02/F03 output choices preserve workflow and scope relations",
+        "src/shared/env/env.spec.ts > V05 manifest"
+      ]
+    },
+    {
+      "module": "env",
+      "mutant": "false_becomes_true",
+      "file": "src/shared/env/reader.ts",
+      "before": "v = r.value === 'true';",
+      "after": "v = r.value === 'false';",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/shared/env/env.spec.ts > V02 parsers"
+      ]
+    }
+  ],
+  "baseline_build_passed": true,
+  "baseline_passed": true,
+  "restored_baseline_passed": true,
+  "workspace_unchanged_at_run": true,
+  "copy_restored": true
+}

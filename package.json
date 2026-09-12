@@ -7,6 +7,7 @@
   "license": "UNLICENSED",
   "type": "module",
   "scripts": {
+    "events:example": "pnpm run build && node dist/events-example.js",
     "build": "nest build",
     "deploy": "nest deploy",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -19,15 +20,32 @@
     "test:watch": "vitest",
     "test:cov": "vitest run --coverage",
     "test:debug": "vitest --inspect-brk --no-file-parallelism",
-    "test:e2e": "vitest run --config ./vitest.config.e2e.ts"
+    "test:e2e": "vitest run --config ./vitest.config.e2e.ts",
+    "http:example": "pnpm run build && node dist/http-example.js",
+    "foundations": "pnpm run build && node dist/foundations.js"
   },
   "dependencies": {
+    "@nats-io/transport-node": "3.4.0",
     "@nestjs/common": "^12.0.1",
     "@nestjs/core": "^12.0.1",
     "@nestjs/observe": "^0.1.8",
     "@nestjs/platform-express": "^12.0.1",
+    "@opentelemetry/api": "1.9.0",
+    "@opentelemetry/context-async-hooks": "2.11.0",
+    "@opentelemetry/core": "2.11.0",
+    "@opentelemetry/exporter-logs-otlp-proto": "0.222.0",
+    "@opentelemetry/exporter-metrics-otlp-proto": "0.222.0",
+    "@opentelemetry/exporter-trace-otlp-proto": "0.222.0",
+    "@opentelemetry/resources": "2.11.0",
+    "@opentelemetry/sdk-logs": "0.222.0",
+    "@opentelemetry/sdk-metrics": "2.11.0",
+    "@opentelemetry/sdk-trace-base": "2.11.0",
+    "@opentelemetry/sdk-trace-node": "2.11.0",
+    "pg": "8.23.0",
+    "pino": "10.3.1",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "ws": "8.21.3"
   },
   "devDependencies": {
     "@nestjs/cli": "^12.0.0",
@@ -36,7 +54,9 @@
     "@nestjs/testing": "^12.0.1",
     "@types/express": "^5.0.0",
     "@types/node": "^24.0.0",
+    "@types/pg": "8.23.1",
     "@types/supertest": "^7.0.0",
+    "@types/ws": "8.18.1",
     "@vitest/coverage-v8": "^4.1.2",
     "oxlint": "^1.58.0",
     "prettier": "^3.4.2",

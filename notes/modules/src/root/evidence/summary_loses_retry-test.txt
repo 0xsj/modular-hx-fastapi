@@ -1,0 +1,34 @@
+The plugin "vite-tsconfig-paths" is detected. Vite now supports tsconfig paths resolution natively via the resolve.tsconfigPaths option. You can remove the plugin and set resolve.tsconfigPaths: true in your Vite config instead.
+
+ RUN  v4.1.11 /private/var/folders/_t/3ghz_tk90d53wy21s4tb20h80000gn/T/n2f-process-mutations-jz_8b_48/work
+
+ ❯ src/root/foundations.spec.ts (2 tests | 1 failed) 14ms
+   × F02/F03 output choices preserve workflow and scope relations 9ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/root/foundations.spec.ts > F02/F03 output choices preserve workflow and scope relations
+AssertionError: expected 1 to be 2 // Object.is equality
+
+- Expected
++ Received
+
+- 2
++ 1
+
+ ❯ src/root/foundations.spec.ts:69:60
+     67|     });
+     68|     expect(second.scope_id).not.toBe(first.scope_id);
+     69|     expect(events['foundations.complete'].fields.attempts).toBe(2);
+       |                                                            ^
+     70|   }
+     71| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 17 passed (18)
+      Tests  1 failed | 66 passed (67)
+   Start at  14:53:24
+   Duration  396ms (transform 1.19s, setup 0ms, import 1.95s, tests 203ms, environment 1ms)
+

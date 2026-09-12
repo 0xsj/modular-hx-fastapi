@@ -1,0 +1,86 @@
+{
+  "language": "n2f-nest",
+  "results": [
+    {
+      "module": "logger",
+      "mutant": "exclusive_floor",
+      "file": "src/shared/logger/runtime.ts",
+      "before": "rank[severity] < rank[level.value]",
+      "after": "rank[severity] <= rank[level.value]",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/root/foundations.spec.ts > F02/F03 output choices preserve workflow and scope relations",
+        "src/root/logger.adapter.spec.ts > routes Nest severity and context without printing raw framework errors",
+        "src/shared/logger/boundary.spec.ts > L09 maximum supported time keeps the UTC console clock shape",
+        "src/shared/logger/boundary.spec.ts > L03 unsupported array accessors are refused without invoking them",
+        "src/shared/logger/logger.spec.ts > L01/L02 inclusive filtering and no-op effects",
+        "src/shared/logger/logger.spec.ts > L03/L10 immutable fields, nested redaction and real JSON output",
+        "src/shared/logger/logger.spec.ts > L06 explicit color and control escaping",
+        "src/shared/logger/logger.spec.ts > L07 failure cannot throw from log emission",
+        "src/shared/logger/logger.spec.ts > L08 bounded queue and close deadline",
+        "src/shared/logger/logger.spec.ts > L09 invalid config/time/size and closed emission",
+        "src/shared/logger/logger.spec.ts > L03 safely refuses cyclic fields without raw display"
+      ]
+    },
+    {
+      "module": "logger",
+      "mutant": "noop_emits",
+      "file": "src/shared/logger/runtime.ts",
+      "before": "format === 'none' || rank[severity]",
+      "after": "rank[severity]",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/root/foundations.spec.ts > F02/F03 output choices preserve workflow and scope relations",
+        "src/shared/logger/logger.spec.ts > L01/L02 inclusive filtering and no-op effects"
+      ]
+    },
+    {
+      "module": "logger",
+      "mutant": "ignores_no_color",
+      "file": "src/shared/logger/config.ts",
+      "before": "terminal && !noColor",
+      "after": "terminal",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/shared/logger/logger.spec.ts > L06 explicit color and control escaping"
+      ]
+    },
+    {
+      "module": "logger",
+      "mutant": "queue_exceeds_capacity",
+      "file": "src/shared/logger/delivery.ts",
+      "before": "this.#queue.length >= this.capacity",
+      "after": "this.#queue.length > this.capacity",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/shared/logger/logger.spec.ts > L08 bounded queue and close deadline"
+      ]
+    },
+    {
+      "module": "logger",
+      "mutant": "cause_presence_inverted",
+      "file": "src/shared/logger/projection.ts",
+      "before": "causeOf(error) !== undefined",
+      "after": "causeOf(error) === undefined",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/shared/logger/logger.spec.ts > L04/L05 safe scope and failure projections"
+      ]
+    }
+  ],
+  "baseline_build_passed": true,
+  "baseline_passed": true,
+  "restored_baseline_passed": true,
+  "workspace_unchanged_at_run": true,
+  "copy_restored": true
+}

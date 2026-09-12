@@ -1,0 +1,40 @@
+{
+  "v": 1,
+  "id": "00000000-0000-4000-8000-000000000001",
+  "type": "diagnostic.created.v1",
+  "occurred_at_ms": 1000,
+  "work": {
+    "work_id": "00000000-0000-4000-8000-000000000002",
+    "correlation_id": "00000000-0000-4000-8000-000000000003",
+    "correlation_source": "local",
+    "causation": {
+      "kind": "scope",
+      "id": "00000000-0000-4000-8000-000000000004"
+    },
+    "origin": "replay",
+    "operation": "diagnostic.event",
+    "attribution": {
+      "initiator": {
+        "kind": "user",
+        "identity": "alice"
+      },
+      "on_behalf_of": {
+        "kind": "user",
+        "identity": "bob"
+      },
+      "tenant": "org-1"
+    },
+    "depth": 1,
+    "replay": {
+      "run_id": "00000000-0000-4000-8000-000000000005",
+      "source": {
+        "kind": "work",
+        "id": "00000000-0000-4000-8000-000000000006"
+      }
+    }
+  },
+  "payload": {
+    "safe": true,
+    "private": "fixture-SENTINEL"
+  }
+}

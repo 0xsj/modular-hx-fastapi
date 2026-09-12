@@ -1,19 +1,22 @@
 # Shared foundations
 
-Reserve this directory for capabilities with a named responsibility and a concrete
-consumer, which may be the process itself.
-Keep shared values independent of NestJS and concrete integrations separate from
-those values. Prefer a focused package for a demonstrated need over a generic
-utilities collection.
+Shared code has a named responsibility and never imports root or product modules.
+Third-party types stay inside their owning adapters.
 
-The first foundation lives in [errors/index.ts](errors/index.ts), with package-level
-documentation and a [concrete contract](errors/CONTRACT.md). Failure values,
-diagnostics, Result helpers and an exception carrier are implemented and tested.
-No Nest filter or wire mapping is connected yet.
+- [errors](errors/README.md): classification, public projection and retained diagnostics.
+- [clock](clock/README.md): wall time and monotonic elapsed measurements.
+- [id](id/README.md): UUID values and fallible generation.
+- [secret](secret/README.md): private strings with explicit reveal and redacted presentation.
+- [env](env/README.md): captured lookup, strict parsing and safe manifests.
+- [provenance](provenance/README.md): immutable execution/work history and explicit transitions.
+- [logger](logger/README.md): console/JSON/no-op output and bounded delivery.
 
-[Clock](clock/README.md) separates wall time from monotonic elapsed readings.
-[ID](id/README.md) provides UUID values, controlled generation and finite fixtures.
-Both have public contract scenarios and language walkthroughs.
-
-Logger, provenance and configuration remain subsequent work. Nothing here should
-depend on a business module or the composition root.
+- [telemetry](telemetry/README.md): trace identity, outcomes and owned SDK delivery.
+- [http](http/README.md): safe wire errors, request observation and completion.
+- [validation](validation/CONTRACT.md): strict scalar checks and bounded safe reports.
+- [pagination](pagination/CONTRACT.md): page bounds and query-bound cursor codec.
+- [postgres](postgres/CONTRACT.md): pool, migration ledger and explicit transactions.
+- [health](health/CONTRACT.md): liveness, readiness and irreversible drain.
+- [httpclient](httpclient/CONTRACT.md): bounded outbound attempts and concrete OTel observation.
+- [socket](socket/CONTRACT.md): versioned messages and native WebSocket lifetime.
+- [events](events/CONTRACT.md): immutable envelopes, outbox and durable publisher seam.

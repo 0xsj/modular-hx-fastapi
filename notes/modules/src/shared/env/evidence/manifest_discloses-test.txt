@@ -1,0 +1,71 @@
+The plugin "vite-tsconfig-paths" is detected. Vite now supports tsconfig paths resolution natively via the resolve.tsconfigPaths option. You can remove the plugin and set resolve.tsconfigPaths: true in your Vite config instead.
+
+ RUN  v4.1.11 /private/var/folders/_t/3ghz_tk90d53wy21s4tb20h80000gn/T/n2f-process-mutations-jz_8b_48/work
+
+ ❯ src/shared/env/env.spec.ts (6 tests | 1 failed) 6ms
+   × V05 manifest 3ms
+ ❯ src/root/foundations.spec.ts (2 tests | 1 failed) 8ms
+   × F02/F03 output choices preserve workflow and scope relations 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/root/foundations.spec.ts > F02/F03 output choices preserve workflow and scope relations
+AssertionError: expected '{"level":"info","timestamp_ms":178912…' not to contain 'private-SENTINEL'
+
+- Expected
++ Received
+
+- private-SENTINEL
++ {"level":"info","timestamp_ms":1789127591877,"service":{"name":"n2f-foundations","namespace":"n2f","version":"dev","environment":"development","instance_id":"01a09050-87c4-708a-a647-90c9988efb53"},"fields":{"simulated":true,"config":[{"key":"APP_ENV","value":"development","source":"default","secret":false},{"key":"DEMO_TOKEN","value":"private-SENTINEL","source":"environment","secret":true},{"key":"DEMO_VERBOSE","value":"false","source":"default","secret":false},{"key":"LOG_CAPACITY","value":"256","source":"default","secret":false},{"key":"LOG_COLOR","value":"never","source":"environment","secret":false},{"key":"LOG_FLUSH_MS","value":"1000","source":"default","secret":false},{"key":"LOG_FORMAT","value":"json","source":"environment","secret":false},{"key":"LOG_LEVEL","value":"info","source":"default","secret":false},{"key":"LOG_MAX_BYTES","value":"65536","source":"default","secret":false},{"key":"NO_COLOR","value":"","source":"default","secret":false},{"key":"SERVICE_NAME","value":"n2f-foundations","source":"default","secret":false},{"key":"SERVICE_NAMESPACE","value":"n2f","source":"default","secret":false},{"key":"SERVICE_VERSION","value":"dev","source":"default","secret":false}],"credential":{"token":"[REDACTED]","public":"visible"}},"scope":{"scope_id":"01a09050-87c5-7239-b995-75d03a21178c","work_id":"01a09050-87c5-7239-b995-75d03a21178c","correlation_id":"01a09050-87c5-7239-b995-75d03a21178c","correlation_source":"local","operation":"foundations.startup","started_at_ms":1789127591877,"executor":{"kind":"service","identity":"n2f-foundations"},"attempt":1,"attribution":{},"origin":"startup","depth":0},"message":"foundations.start"}
++ {"level":"info","timestamp_ms":1789127591878,"service":{"name":"n2f-foundations","namespace":"n2f","version":"dev","environment":"development","instance_id":"01a09050-87c4-708a-a647-90c9988efb53"},"fields":{"simulated":true,"work_id":"01a09050-87c6-75f1-ad7c-db35282d5201"},"scope":{"scope_id":"01a09050-87c5-7239-b995-75d03a21178c","work_id":"01a09050-87c5-7239-b995-75d03a21178c","correlation_id":"01a09050-87c5-7239-b995-75d03a21178c","correlation_source":"local","operation":"foundations.startup","started_at_ms":1789127591877,"executor":{"kind":"service","identity":"n2f-foundations"},"attempt":1,"attribution":{},"origin":"startup","depth":0},"message":"work.prepared"}
++ {"level":"warn","timestamp_ms":1789127591878,"service":{"name":"n2f-foundations","namespace":"n2f","version":"dev","environment":"development","instance_id":"01a09050-87c4-708a-a647-90c9988efb53"},"fields":{"simulated":true},"scope":{"scope_id":"01a09050-87c6-75f2-b575-9a605c0b74fe","work_id":"01a09050-87c6-75f1-ad7c-db35282d5201","correlation_id":"01a09050-87c5-7239-b995-75d03a21178c","correlation_source":"local","operation":"demo.export","started_at_ms":1789127591878,"executor":{"kind":"service","identity":"n2f-foundations"},"attempt":1,"attribution":{},"origin":"startup","depth":1,"causation":{"kind":"scope","id":"01a09050-87c5-7239-b995-75d03a21178c"}},"error":{"classified":true,"kind":"unavailable","type":"demo.offline","public":{"kind":"unavailable","message":"demo dependency unavailable","type":"demo.offline"},"has_cause":true},"message":"dependency.unavailable"}
++ {"level":"info","timestamp_ms":1789127591878,"service":{"name":"n2f-foundations","namespace":"n2f","version":"dev","environment":"development","instance_id":"01a09050-87c4-708a-a647-90c9988efb53"},"fields":{"simulated":true,"result":"exported","elapsed_ms":1.240875},"scope":{"scope_id":"01a09050-87c6-75f3-8ca2-d29c508ec7a9","work_id":"01a09050-87c6-75f1-ad7c-db35282d5201","correlation_id":"01a09050-87c5-7239-b995-75d03a21178c","correlation_source":"local","operation":"demo.export","started_at_ms":1789127591878,"executor":{"kind":"service","identity":"n2f-foundations"},"attempt":2,"attribution":{},"origin":"startup","depth":1,"causation":{"kind":"scope","id":"01a09050-87c5-7239-b995-75d03a21178c"},"previous_attempt":"01a09050-87c6-75f2-b575-9a605c0b74fe"},"message":"work.completed"}
++ {"level":"warn","timestamp_ms":1789127591878,"service":{"name":"n2f-foundations","namespace":"n2f","version":"dev","environment":"development","instance_id":"01a09050-87c4-708a-a647-90c9988efb53"},"fields":{"simulated":true},"scope":{"scope_id":"01a09050-87c5-7239-b995-75d03a21178c","work_id":"01a09050-87c5-7239-b995-75d03a21178c","correlation_id":"01a09050-87c5-7239-b995-75d03a21178c","correlation_source":"local","operation":"foundations.startup","started_at_ms":1789127591877,"executor":{"kind":"service","identity":"n2f-foundations"},"attempt":1,"attribution":{},"origin":"startup","depth":0},"error":{"classified":true,"kind":"conflict","type":"demo.exists","public":{"kind":"conflict","message":"demo item already exists","type":"demo.exists"},"has_cause":false},"message":"operation.conflict"}
++ {"level":"error","timestamp_ms":1789127591878,"service":{"name":"n2f-foundations","namespace":"n2f","version":"dev","environment":"development","instance_id":"01a09050-87c4-708a-a647-90c9988efb53"},"fields":{"simulated":true},"scope":{"scope_id":"01a09050-87c5-7239-b995-75d03a21178c","work_id":"01a09050-87c5-7239-b995-75d03a21178c","correlation_id":"01a09050-87c5-7239-b995-75d03a21178c","correlation_source":"local","operation":"foundations.startup","started_at_ms":1789127591877,"executor":{"kind":"service","identity":"n2f-foundations"},"attempt":1,"attribution":{},"origin":"startup","depth":0},"error":{"classified":false,"kind":"internal","public":{"kind":"internal","message":"internal error"},"has_cause":false},"message":"operation.unknown"}
++ {"level":"info","timestamp_ms":1789127591878,"service":{"name":"n2f-foundations","namespace":"n2f","version":"dev","environment":"development","instance_id":"01a09050-87c4-708a-a647-90c9988efb53"},"fields":{"simulated":true,"completed":1,"refused":1,"attempts":2,"unknown":1,"elapsed_ms":1.326667},"scope":{"scope_id":"01a09050-87c5-7239-b995-75d03a21178c","work_id":"01a09050-87c5-7239-b995-75d03a21178c","correlation_id":"01a09050-87c5-7239-b995-75d03a21178c","correlation_source":"local","operation":"foundations.startup","started_at_ms":1789127591877,"executor":{"kind":"service","identity":"n2f-foundations"},"attempt":1,"attribution":{},"origin":"startup","depth":0},"message":"foundations.complete"}
++
+
+ ❯ src/root/foundations.spec.ts:47:30
+     45|     expect(code).toBe(0);
+     46|     expect(diagnostic).toEqual([]);
+     47|     expect(out.join('')).not.toContain('private-SENTINEL');
+       |                              ^
+     48|     if (mode === 'none') {
+     49|       expect(out).toEqual([]);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/shared/env/env.spec.ts > V05 manifest
+AssertionError: expected [ [ 'COUNT', '3', 'default' ], …(2) ] to deeply equal [ [ 'COUNT', '3', 'default' ], …(2) ]
+
+- Expected
++ Received
+
+@@ -9,9 +9,9 @@
+      "visible",
+      "environment",
+    ],
+    [
+      "TOKEN",
+-     "[REDACTED]",
++     "private-SENTINEL",
+      "environment",
+    ],
+  ]
+
+ ❯ src/shared/env/env.spec.ts:69:60
+     67|   expect(v.ok).toBe(true);
+     68|   if (v.ok) {
+     69|     expect(v.value.map((x) => [x.key, x.value, x.source])).toEqual([
+       |                                                            ^
+     70|       ['COUNT', '3', 'default'],
+     71|       ['NAME', 'visible', 'environment'],
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 16 passed (18)
+      Tests  2 failed | 65 passed (67)
+   Start at  14:53:11
+   Duration  680ms (transform 3.14s, setup 0ms, import 4.61s, tests 231ms, environment 1ms)
+

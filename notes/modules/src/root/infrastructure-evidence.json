@@ -1,0 +1,37 @@
+{
+  "date": "2026-09-11",
+  "language": "nest",
+  "unit_suite": "passed",
+  "postgres_real": "passed",
+  "events_real": "passed",
+  "near_limit_envelope_storage": "passed",
+  "compiled_events_example": "passed",
+  "health_outage_recovery": "passed",
+  "transport_noop": "passed",
+  "transport_otlp": "passed",
+  "stored_outbound_parent_status_metric": "passed",
+  "sampled_http": {
+    "requests": 48,
+    "completion_logs": 48,
+    "invalid_config_starts": 6,
+    "stored_server_spans_logs_metrics": "passed"
+  },
+  "mutations": {
+    "caught": 6,
+    "selected": 6,
+    "exhaustive": false
+  },
+  "limitations": [
+    "NATS/JetStream adapter not implemented",
+    "single mailbox destination, no fanout",
+    "socket/event observation currently scoped local logs",
+    "heartbeat-loss and saturation not exercised"
+  ],
+  "commands": [
+    "python3 tools/verify_infrastructure.py",
+    "python3 tools/verify_transports.py",
+    "python3 tools/mutations/infrastructure.py",
+    "python3 tools/verify_http.py --mode otlp --endpoint <collector> --evidence <file>",
+    "python3 tools/telemetry/verify_http_delivery.py --grafana <grafana> --evidence <file>"
+  ]
+}

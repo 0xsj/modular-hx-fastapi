@@ -1,0 +1,107 @@
+{
+  "date": "2026-09-11",
+  "kind": "ordinary regression and native integration evidence",
+  "process_matrix": [
+    {
+      "repository": "n2f-nest",
+      "requests": 48,
+      "completion_logs": 48,
+      "shutdown_ms": 9,
+      "mode": "none",
+      "result": "passed",
+      "scenario": "none"
+    },
+    {
+      "repository": "n2f-nest",
+      "requests": 48,
+      "completion_logs": 48,
+      "shutdown_ms": 8,
+      "mode": "otlp",
+      "result": "passed",
+      "scenario": "sampled",
+      "delivery": {
+        "service": "n2f-nest-http-verification",
+        "instance": "01a09191-7347-70df-9e3f-90d8e3afe0fc",
+        "trace_retrieved": true,
+        "log_streams": 48,
+        "metric_series": 14,
+        "result": "passed"
+      }
+    },
+    {
+      "repository": "n2f-nest",
+      "requests": 48,
+      "completion_logs": 48,
+      "shutdown_ms": 9,
+      "mode": "otlp",
+      "result": "passed",
+      "scenario": "unsampled",
+      "delivery": {
+        "service": "n2f-nest-http-verification",
+        "instance": "01a09191-8129-74a9-b1cf-e5d6df8787f8",
+        "trace_retrieved": false,
+        "log_streams": 48,
+        "metric_series": 14,
+        "result": "passed"
+      }
+    },
+    {
+      "repository": "n2f-nest",
+      "requests": 48,
+      "completion_logs": 48,
+      "shutdown_ms": 16,
+      "mode": "otlp",
+      "result": "passed",
+      "scenario": "outage"
+    },
+    {
+      "repository": "n2f-nest",
+      "requests": 48,
+      "completion_logs": 48,
+      "shutdown_ms": 18,
+      "mode": "otlp",
+      "result": "passed",
+      "scenario": "recovery",
+      "delivery": {
+        "service": "n2f-nest-http-verification",
+        "instance": "01a09191-9a45-7041-8631-e9b93b7fdb70",
+        "trace_retrieved": true,
+        "log_streams": 44,
+        "metric_series": 14,
+        "result": "passed"
+      }
+    }
+  ],
+  "invalid_configuration_starts_per_scenario": 6,
+  "selected_mutations": [
+    {
+      "name": "success-becomes-failure",
+      "caught": true,
+      "source_sha256": "b340843795ac1e2a3b70673d92628690006ed60e5988b965c01b1b7c7bd8fd5d"
+    },
+    {
+      "name": "duplicate-completion",
+      "caught": true,
+      "source_sha256": "5d98aeb35baf0c07e4d9c29fdf7fc7253aad9bada134c1137bb330f540bd2663"
+    },
+    {
+      "name": "omit-trace-envelope",
+      "caught": true,
+      "source_sha256": "63967dc460ba868107acae5db08a3a7419b4038b1e6f39d8bae8e1f9b936371d"
+    },
+    {
+      "name": "coarse-status-error",
+      "caught": true,
+      "source_sha256": "83e03e684c5b67ee28d63cabe59163106d3a23c0e1510f50b19e7d66f42b447b"
+    }
+  ],
+  "mutation_limit": "Four selected faults; not an exhaustive score. Source hashes identify the tested leaf versions.",
+  "final_compiled_smoke": {
+    "requests": 48,
+    "completion_logs": 48,
+    "stored_spans_checked": true,
+    "stored_logs_with_trace_and_provenance": true,
+    "stored_duration_histograms": true,
+    "service_instance_id": "01a09197-e4f0-7168-b143-444faab5be76"
+  }
+}

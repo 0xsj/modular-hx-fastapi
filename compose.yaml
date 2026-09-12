@@ -27,6 +27,29 @@ services:
         max-size: "10m"
         max-file: "3"
 
+  nats:
+    image: nats:2.14.6-alpine
+    restart: unless-stopped
+    command: ["-c", "/etc/nats/nats.conf"]
+    ports:
+      - "127.0.0.1:${N2F_NATS_PORT:-7222}:4222"
+      - "127.0.0.1:${N2F_NATS_MONITOR_PORT:-7223}:8222"
+    volumes:
+      - nats_data:/data
+      - ./config/nats/nats.conf:/etc/nats/nats.conf:ro
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:8222/healthz?js-enabled-only=true"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+    stop_grace_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
   redis:
     image: redis:8.10.1-alpine
     restart: unless-stopped
@@ -136,6 +159,7 @@ services:
         max-file: "3"
 
 volumes:
+  nats_data:
   postgres_data:
   redis_data:
   mailpit_data:

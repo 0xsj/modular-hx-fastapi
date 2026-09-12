@@ -2,7 +2,7 @@
 
 This repository owns its [Compose setup](compose.yaml). Docker with Compose v2
 is the only prerequisite for these dependencies; the application still runs
-with its own language tooling. The services run locally; application adapters and instrumentation are not connected yet.
+with its own language tooling. PostgreSQL, JetStream and HTTP/OTLP have application adapters and executable verification.
 
 ## Start and inspect
 
@@ -21,6 +21,8 @@ These are Compose variables; copying the file does not configure the application
 | Service | Image | Address from your host | Address inside this Compose network |
 | --- | --- | --- | --- |
 | PostgreSQL | `postgres:18.6-alpine` | `127.0.0.1:7220` | `postgres:5432` |
+| NATS JetStream | `nats:2.14.6-alpine` | `127.0.0.1:7222` | `nats:4222` |
+| NATS monitoring | same container | `http://127.0.0.1:7223` | `nats:8222` |
 | Redis | `redis:8.10.1-alpine` | `127.0.0.1:7221` | `redis:6379` |
 | Mailpit SMTP | `axllent/mailpit:v1.31.1` | `127.0.0.1:7225` | `mailpit:1025` |
 | Mailpit inbox | same container | `http://127.0.0.1:7226` | `mailpit:8025` |
@@ -57,7 +59,7 @@ docker compose exec redis redis-cli ping
 Named volumes belong to the Compose project, whose default name is `n2f-nest`.
 Each n2f build uses different default host ports and a different project name.
 For two copies of this same blueprint, override `COMPOSE_PROJECT_NAME` and
-all eight published port variables in `.env.example`. Changing only the project
+all ten published port variables in `.env.example`. Changing only the project
 name isolates volumes and networks but does not avoid host port conflicts.
 
 ```sh
@@ -88,7 +90,7 @@ See [Redis persistence](https://redis.io/docs/latest/operate/oss_and_stack/manag
 Image versions are explicit so the three builds use the same release. Tags are
 not immutable digests; update and recheck them together. Docker logs rotate at
 10 MB with three files per container. The telemetry backend has its own data
-volume. Application instrumentation is future work.
+volume. Application HTTP/OTLP instrumentation is implemented; see TELEMETRY_HTTP.md.
 
 ## Observability
 
@@ -147,15 +149,23 @@ This is a local S3 adapter target, not a claim of complete AWS feature parity.
 
 ## Events and realtime
 
-WebSocket is the selected realtime protocol. Its endpoint belongs in each
-backend's transport layer; no extra socket container is needed. The first feature
-must define authorization, message envelopes, heartbeat, slow-consumer limits,
-and reconnect/resynchronization behavior.
+The diagnostic WebSocket endpoint is implemented in the native transport adapter;
+no extra socket container is needed. It has versioned message envelopes, heartbeat,
+admission and shutdown. Domain authorization and reconnect/resynchronization policy
+still belong to the first business workflow.
 
-An outbox will record promised events in the same transaction as their state
-change. A worker owns delivery and retries; JetStream can supply durable broker
-transport later. Outbox and broker are complementary responsibilities, and an
-adapter swap must preserve the observable contract. Neither event machinery nor
-a WebSocket endpoint is implemented by this Compose change.
+The transactional outbox records promised events with state changes. Its dispatcher
+now accepts either PostgreSQL mailbox or JetStream publication. Root owns polling
+and the broker-to-mailbox handoff. [Real adapter checks](JETSTREAM.md) validate the
+swap while preserving the database consumer transaction and deduplication boundary.
 
 See [the foundation decision](decisions/0002-observability-smtp-and-s3-join-local-startup.md).
+
+## JetStream and port isolation
+
+[JetStream setup and verification](JETSTREAM.md) documents persistent storage,
+root transport selection and the complete three-build port matrix. All ten published
+ports per clone bind to loopback. The effective Compose configurations were checked
+together: 30 unique TCP ports, no collisions. Project names and named volumes are
+also distinct. Overrides can introduce collisions; choose new ports for another
+copy of the same blueprint.

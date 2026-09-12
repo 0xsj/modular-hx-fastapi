@@ -1,0 +1,23 @@
+{
+  "language": "n2f-nest",
+  "results": [
+    {
+      "module": "root",
+      "mutant": "summary_loses_retry",
+      "file": "src/root/demo.ts",
+      "before": "attempts: 2",
+      "after": "attempts: 1",
+      "build_exit": 0,
+      "test_exit": 1,
+      "outcome": "killed",
+      "failing_cases": [
+        "src/root/foundations.spec.ts > F02/F03 output choices preserve workflow and scope relations"
+      ]
+    }
+  ],
+  "baseline_build_passed": true,
+  "baseline_passed": true,
+  "restored_baseline_passed": true,
+  "workspace_unchanged_at_run": true,
+  "copy_restored": true
+}

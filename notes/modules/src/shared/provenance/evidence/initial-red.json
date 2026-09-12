@@ -1,0 +1,11 @@
+{
+  "note": "Captured initial tool result. Output may be truncated as marked; this is not a full raw command log.",
+  "result": {
+    "chunk_id": "ff2ec1",
+    "wall_time_seconds": 0.58295625,
+    "exit_code": 1,
+    "original_token_count": 829,
+    "output": "Warning: truncated output (original token count: 829)\nTotal output lines: 84\n\nThe plugin \"vite-tsconfig-paths\" is detected. Vite now supports tsconfig paths resolution natively via the resolve.tsconfigPaths option. You can remove the plugin and set resolve.tsconfigPaths: true in your Vite config instead.\n\n RUN  v4.1.11 /Users/sj/Desktop/dev/builds/blueprints/n2f-nest\n\n ❯ src/shared/provenance/provenance.spec.ts (8 tests | 8 failed) 4ms\n   × P01 P02 attribution 2ms\n   × P03 P04 P05 P06 P07 P08 P09 transitions 0ms\n   × P10 P11 bounds and wall corrections 0ms\n   × P12 P23 validates before effects and forwards failures 0ms\n   × P13 links 0ms\n   × P14 replay 0ms\n   × P15 P16 P17 incoming dispositions 0ms\n   × P18 P19 snapshot ownership and validation 0ms\n\n⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯\n\n FAIL  src/shared/provenance/provenance.spec.ts > P01 P02 attribution\nTypeError: actor is not a function\n ❯ src/shared/provenance/provenance.spec…379 tokens truncated…ts:18:32\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/8]⎯\n\n FAIL  src/shared/provenance/provenance.spec.ts > P15 P16 P17 incoming dispositions\nTypeError: Factory is not a constructor\n ❯ setup src/shared/provenance/provenance.spec.ts:11:74\n\n ❯ src/shared/provenance/provenance.spec.ts:19:55\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/8]⎯\n\n FAIL  src/shared/provenance/provenance.spec.ts > P18 P19 snapshot ownership and validation\nTypeError: Factory is not a constructor\n ❯ setup src/shared/provenance/provenance.spec.ts:11:74\n\n ❯ src/shared/provenance/provenance.spec.ts:20:69\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/8]⎯\n\n\n Test Files  1 failed (1)\n      Tests  8 failed (8)\n   Start at  13:12:08\n   Duration  140ms (transform 35ms, setup 0ms, import 48ms, tests 4ms, environment 0ms)\n\n"
+  }
+}
+
